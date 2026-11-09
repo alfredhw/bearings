@@ -1,0 +1,2047 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Bearings</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Bearings: a short, self-paced course in research and AI literacy, in six modules.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,400&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+
+  --paper: #fafafa;
+  --paper-raised: #ffffff;
+  --paper-sunk: #f1f3f5;
+  --ink: #1d2329;
+  --ink-muted: #5a6470;
+  --slate: #2b5f9e;
+  --slate-tint: #e7eef8;
+  --green: #2f6b45;
+  --green-tint: #e6f1e9;
+  --sepia: #8a5a2b;
+  --signal: #2b5f9e;
+  --on-signal: #ffffff;
+  --hairline: #e3e6ea;
+  --rule: #c4c9d0;
+  --wrong: #a3402c;
+  --wrong-tint: #fbece8;
+  --seg: #e9ecef;
+  --seg-ink: #5a6470;
+
+  --f-display: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  --f-text: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --f-label: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+
+  --s-1: 0.75rem; --s-2: 0.875rem; --s-3: 1rem; --s-4: 1.125rem; --s-5: 1.375rem; --s-6: 1.75rem; --s-7: 2.5rem; --s-8: 3.5rem;
+  --measure: 40rem;
+  --radius: 6px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #15181c; --paper-raised: #1c2025; --paper-sunk: #111417;
+    --ink: #dfe3e8; --ink-muted: #9aa3ad; --seg: #262c33; --seg-ink: #9aa3ad;
+    --slate: #8db4e6; --slate-tint: #1f2c3d;
+    --green: #8cc79f; --green-tint: #1a2a20;
+    --sepia: #d6a874; --signal: #8db4e6; --on-signal: #0d1520;
+    --hairline: #2a2f36; --rule: #48515b;
+    --wrong: #e39a86; --wrong-tint: #3a211c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #15181c; --paper-raised: #1c2025; --paper-sunk: #111417;
+  --ink: #dfe3e8; --ink-muted: #9aa3ad; --seg: #262c33; --seg-ink: #9aa3ad;
+  --slate: #8db4e6; --slate-tint: #1f2c3d;
+  --green: #8cc79f; --green-tint: #1a2a20;
+  --sepia: #d6a874; --signal: #8db4e6; --on-signal: #0d1520;
+  --hairline: #2a2f36; --rule: #48515b;
+  --wrong: #e39a86; --wrong-tint: #3a211c;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-text);
+  font-size: var(--s-3);
+  line-height: 1.6;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+a { color: var(--signal); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, label:focus-within {
+  outline: 2px solid var(--signal); outline-offset: 2px;
+}
+code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 0.88em; background: var(--paper-sunk); padding: 0 0.25em; overflow-wrap: anywhere; }
+h1, h2, h3 { text-wrap: balance; font-weight: 700; letter-spacing: -0.015em; margin: 0; }
+p { margin: 0; }
+ul { margin: 0; padding-left: 1.2em; }
+li + li { margin-top: 0.35em; }
+
+/* Default .label: quiet sentence-case sans-serif */
+.label {
+  font-family: var(--f-label);
+  font-weight: 600;
+  font-size: 0.82rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-muted);
+  line-height: 1.35;
+}
+/* Reserve small-caps / uppercase strictly for box titles, figure bars, and table headers */
+.how .label,
+.fig-cap .label,
+.ev-label,
+.chart-wrap > .label,
+table.log th {
+  font-family: var(--f-label);
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.inner { max-width: 68rem; margin: 0 auto; }
+
+/* ── Masthead ── */
+.masthead {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--paper); border-bottom: 1px solid var(--rule);
+}
+.masthead .inner { display: flex; flex-direction: column; gap: 8px; padding-block: 10px 10px; }
+.mast-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+.brand .wordmark { font-family: var(--f-label); font-weight: 700; letter-spacing: -0.01em; font-size: 1.15rem; }
+.nav { display: flex; gap: 2px; flex-wrap: wrap; }
+.nav a {
+  font-family: var(--f-label); font-weight: 500; font-size: 0.9rem;
+  color: var(--ink-muted); text-decoration: none; padding: 4px 8px; border: 1px solid transparent; border-radius: var(--radius);
+}
+.nav a:hover { color: var(--ink); border-color: var(--hairline); }
+.nav a[aria-current="page"] { border-color: transparent; background: var(--slate-tint); color: var(--slate); }
+
+.scalebar { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.scalebar a {
+  display: block; text-decoration: none; text-align: center; padding: 1px 0;
+  font-family: var(--f-label); font-weight: 600; font-size: 12px;
+  background: var(--seg); color: var(--seg-ink); border-radius: 4px;
+}
+.scalebar a:hover { color: var(--ink); }
+.scalebar a.done { background: var(--green); color: var(--paper-raised); }
+.scalebar a.here { background: var(--signal); color: var(--on-signal); }
+
+main .inner { padding-block: 32px 64px; display: flex; flex-direction: column; gap: 48px; }
+
+/* ── Hero / Cover ── */
+.hero { display: flex; flex-direction: column; gap: 14px; padding-block: 16px 8px; max-width: 46rem; }
+.hero h1 { font-family: var(--f-display); font-size: clamp(2.8rem, 8vw, 4.2rem); line-height: 1; letter-spacing: -0.03em; }
+.hero .sub { font-size: 1.25rem; line-height: 1.5; color: var(--ink-muted); max-width: 38rem; }
+a.btn-link {
+  display: inline-block; font-family: var(--f-label); font-weight: 600; font-size: 0.95rem; text-decoration: none;
+  background: var(--signal); color: var(--on-signal); padding: 10px 18px; border-radius: var(--radius);
+}
+a.btn-link:hover { filter: brightness(1.08); }
+
+.neatline { border: 3px solid var(--ink); padding: 5px; }
+.neatline > .neat-inner { border: 1.5px solid var(--rule); display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); min-height: 22rem; }
+.cartouche { padding: 32px 28px; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; }
+.cartouche h1 { font-family: var(--f-display); font-size: clamp(3rem, 9vw, 5.5rem); line-height: 0.95; letter-spacing: -0.01em; }
+.cartouche .sub { font-style: italic; font-size: var(--s-5); line-height: 1.35; max-width: 30rem; color: var(--ink); }
+.cartouche .short-rule { width: 64px; height: 0; border-top: 1.5px solid var(--ink); }
+.credit { display: flex; align-items: center; gap: 10px; }
+.credit .label { color: var(--ink); }
+.field { background: var(--slate); position: relative; min-height: 14rem; border-left: 1.5px solid var(--rule); }
+.field canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.field .field-cap { position: absolute; left: 12px; bottom: 10px; color: var(--paper); opacity: 0.85; }
+@media (max-width: 720px) {
+  .neatline > .neat-inner { grid-template-columns: 1fr; }
+  .field { border-left: 0; border-top: 1.5px solid var(--rule); min-height: 9rem; order: -1; }
+  .cartouche { padding: 24px 18px; }
+}
+
+/* ── Sections ── */
+.section { display: flex; flex-direction: column; gap: 16px; }
+.section-head { display: flex; flex-direction: column; gap: 4px; border-bottom: 1px solid var(--hairline); padding-bottom: 8px; }
+.section-head h2 { font-family: var(--f-display); font-size: 1.45rem; line-height: 1.25; }
+.prose { max-width: var(--measure); display: flex; flex-direction: column; gap: 14px; font-size: var(--s-4); line-height: 1.65; }
+.prose ul { display: flex; flex-direction: column; gap: 6px; }
+.prose li + li { margin-top: 0; }
+.two-col { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 18rem); gap: 40px; align-items: start; }
+@media (max-width: 860px) { .two-col { grid-template-columns: 1fr; gap: 24px; } }
+
+.legend { background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: var(--radius); padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.legend-title { font-family: var(--f-label); font-weight: 600; font-size: 0.95rem; color: var(--ink); border-bottom: 1px solid var(--hairline); padding-bottom: 6px; }
+.legend dl { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.legend .row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; align-items: start; }
+.legend .sw { display: none; }
+.legend dt { font-weight: 700; font-size: var(--s-2); line-height: 1.35; }
+.legend dd { margin: 2px 0 0; font-size: var(--s-2); line-height: 1.45; color: var(--ink-muted); }
+
+/* ── Module header ── */
+.plate-head { display: flex; flex-direction: column; gap: 8px; }
+.plate-head h1 { font-family: var(--f-display); font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.1; }
+.plate-head .bearing { font-style: italic; font-size: 1.2rem; color: var(--ink-muted); }
+.plate-meta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--f-label); font-weight: 600; font-size: 0.78rem;
+  padding: 2px 9px; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink-muted); background: var(--paper);
+  white-space: nowrap;
+}
+.chip.ok { border-color: var(--green); color: var(--green); background: var(--green-tint); }
+.chip.here { border-color: var(--signal); color: var(--on-signal); background: var(--signal); }
+.chip.part { border-color: var(--slate); color: var(--slate); background: var(--slate-tint); }
+
+/* ── Module index ── */
+.index { border-top: 1px solid var(--rule); }
+.index a {
+  display: grid; grid-template-columns: 3.2rem minmax(0, 1fr) auto; gap: 16px; align-items: center;
+  padding: 14px 4px; border-bottom: 1px solid var(--hairline); text-decoration: none; color: var(--ink);
+}
+.index a:hover { background: var(--paper-raised); }
+.index .num { font-family: var(--f-display); font-weight: 700; font-size: 1.6rem; line-height: 1; color: var(--slate); text-align: center; }
+.index .nm { font-size: var(--s-4); font-weight: 600; }
+.index .br { font-style: italic; color: var(--ink-muted); font-size: var(--s-2); }
+@media (max-width: 520px) {
+  .index a { grid-template-columns: 2.4rem minmax(0, 1fr); }
+  .index a .chip { grid-column: 2; justify-self: start; }
+}
+
+.how { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper-raised); }
+.how > div { padding: 14px 16px; display: flex; flex-direction: column; gap: 6px; }
+.how > div + div { border-left: 1px solid var(--hairline); }
+.how p { font-size: var(--s-2); color: var(--ink-muted); line-height: 1.5; }
+@media (max-width: 860px) { .how { grid-template-columns: repeat(2, minmax(0, 1fr)); } .how > div:nth-child(3) { border-left: 0; } .how > div:nth-child(n+3) { border-top: 1px solid var(--hairline); } }
+@media (max-width: 480px) { .how { grid-template-columns: 1fr; } .how > div + div { border-left: 0; border-top: 1px solid var(--hairline); } }
+
+.note { font-size: var(--s-2); color: var(--ink-muted); max-width: var(--measure); line-height: 1.55; }
+
+/* ── Figures (exercise / mastery) ── */
+.fig { border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper-raised); overflow: hidden; }
+.fig-cap { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 8px 14px; border-bottom: 1px solid var(--hairline); background: var(--paper-sunk); }
+.fig-body { padding: 18px 16px; display: flex; flex-direction: column; gap: 24px; }
+.fig-body > .intro { max-width: var(--measure); display: flex; flex-direction: column; gap: 10px; }
+.part { display: flex; flex-direction: column; gap: 12px; padding-top: 18px; border-top: 1px solid var(--hairline); }
+.part:first-of-type { border-top: 0; padding-top: 0; }
+.part-prompt { font-weight: 700; max-width: var(--measure); }
+
+.answer-block { background: var(--paper); border: 1px solid var(--rule); border-radius: var(--radius); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; max-width: var(--measure); }
+.answer-block .q { font-style: italic; color: var(--ink-muted); font-size: var(--s-2); }
+.answer-block p { font-size: var(--s-3); }
+.answer-block sup { color: var(--signal); font-family: var(--f-label); font-weight: 600; }
+
+.items { display: flex; flex-direction: column; gap: 10px; }
+.item { border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--paper); padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.item.right { border-color: var(--green); }
+.item.wrong { border-color: var(--wrong); }
+.item-text { font-size: var(--s-3); line-height: 1.5; }
+.item-text .ref-n { font-family: var(--f-label); font-weight: 600; color: var(--signal); margin-right: 4px; }
+.item-text .doi { display: block; margin-top: 4px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.82em; color: var(--ink-muted); overflow-wrap: anywhere; }
+.item-text .cited-for { display: block; margin-top: 6px; font-style: italic; font-size: var(--s-2); color: var(--ink-muted); }
+
+.seg { display: flex; flex-wrap: wrap; gap: 6px; border: 0; margin: 0; padding: 0; min-width: 0; }
+.seg legend { padding: 0; margin-bottom: 4px; }
+.seg label {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  border: 1px solid var(--rule); border-radius: var(--radius); padding: 5px 10px; font-size: var(--s-2); background: var(--paper); line-height: 1.3;
+}
+.seg input { accent-color: var(--signal); margin: 0; }
+.seg label:has(input:checked) { border-color: var(--signal); background: var(--slate-tint); }
+.seg.conf label { font-family: var(--f-label); font-weight: 500; font-size: 0.85rem; }
+
+.opts { display: flex; flex-direction: column; gap: 6px; border: 0; margin: 0; padding: 0; min-width: 0; }
+.opts label { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; align-items: start; cursor: pointer; padding: 8px 10px; border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--paper); line-height: 1.45; }
+.opts input { accent-color: var(--signal); margin: 3px 0 0; }
+.opts label:has(input:checked) { border-color: var(--signal); background: var(--slate-tint); }
+.opts label.is-key { border-color: var(--green); }
+
+.fb { font-size: var(--s-2); line-height: 1.5; padding: 8px 10px; border-left: 3px solid var(--rule); border-radius: var(--radius); background: var(--paper-sunk); }
+.fb.right { border-left-color: var(--green); background: var(--green-tint); }
+.fb.wrong { border-left-color: var(--wrong); background: var(--wrong-tint); }
+.fb strong { font-family: var(--f-label); font-weight: 600; margin-right: 6px; }
+
+.fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 12px; }
+.fieldset { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.fieldset label { font-size: var(--s-2); font-weight: 700; }
+input[type="text"], textarea {
+  font: inherit; font-size: var(--s-3); color: var(--ink); background: var(--paper);
+  border: 1px solid var(--rule); border-radius: var(--radius); padding: 8px 10px; width: 100%;
+}
+textarea { resize: vertical; line-height: 1.5; }
+input[type="text"].right, textarea.right { border-color: var(--green); }
+input[type="text"].wrong { border-color: var(--wrong); }
+.hint { font-size: var(--s-1); color: var(--ink-muted); }
+
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+button.btn {
+  font-family: var(--f-label); font-weight: 600; font-size: 0.95rem;
+  border: 1.5px solid var(--signal); border-radius: var(--radius); background: var(--signal); color: var(--on-signal); padding: 9px 16px; cursor: pointer;
+}
+button.btn:hover { background: var(--slate); border-color: var(--slate); color: var(--on-signal); filter: brightness(1.08); }
+button.btn.quiet { background: transparent; color: var(--ink); border-color: var(--rule); }
+button.btn.quiet:hover { background: var(--paper-sunk); color: var(--ink); filter: none; }
+button.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+button.btn.danger { background: transparent; color: var(--wrong); border-color: var(--wrong); }
+.status-line { font-family: var(--f-label); font-size: var(--s-2); color: var(--ink-muted); }
+
+.verdict { border: 1.5px solid var(--ink); border-radius: var(--radius); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; background: var(--paper); }
+.verdict.pass { border-color: var(--green); background: var(--green-tint); }
+.verdict.fail { border-color: var(--rule); }
+.verdict h3 { font-size: var(--s-5); }
+.stats { display: flex; gap: 20px; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; }
+.stat .v { font-family: var(--f-text); font-size: var(--s-6); line-height: 1.1; font-variant-numeric: tabular-nums; }
+
+.mq-num { font-family: var(--f-label); font-weight: 600; color: var(--signal); font-size: 0.82rem; }
+
+.evidence { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper); }
+.evidence > div { padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.evidence > div + div { border-left: 1px solid var(--hairline); }
+.evidence p { font-size: var(--s-2); line-height: 1.5; }
+.ev-label { color: var(--sepia); }
+@media (max-width: 720px) { .evidence { grid-template-columns: 1fr; } .evidence > div + div { border-left: 0; border-top: 1px solid var(--hairline); } }
+
+.citation-sample { margin-top: 10px; font-weight: 400; padding: 10px 12px; background: var(--paper-sunk); border-left: 3px solid var(--rule); font-size: var(--s-2); line-height: 1.55; padding-left: 2.2em; text-indent: -1.2em; }
+
+.plate-nav { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--rule); padding-top: 14px; }
+.plate-nav a { text-decoration: none; display: flex; flex-direction: column; gap: 2px; color: var(--ink); }
+.plate-nav a:hover .nm { text-decoration: underline; }
+.plate-nav .nm { font-size: var(--s-4); font-weight: 600; }
+.plate-nav a.next { text-align: right; margin-left: auto; }
+
+/* ── Record ── */
+.chart-wrap { border: 1px solid var(--rule); border-radius: var(--radius); background: var(--paper-raised); padding: 12px; overflow-x: auto; }
+.chart-wrap svg { display: block; width: 100%; max-width: 40rem; height: auto; }
+table.log { border-collapse: collapse; width: 100%; font-size: var(--s-2); font-variant-numeric: tabular-nums; }
+.table-scroll { overflow-x: auto; }
+table.log th { text-align: left; background: var(--paper-sunk); color: var(--ink-muted); }
+table.log th, table.log td { padding: 6px 10px; border-bottom: 1px solid var(--hairline); white-space: nowrap; }
+.code-box { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; word-break: break-all; }
+
+/* ── Certificate ── */
+.cert { background: var(--paper-raised); }
+.neatline.cert { border: 1px solid var(--rule); padding: 0; border-radius: 10px; overflow: hidden; }
+.neatline.cert > .neat-inner { border: 0; border-top: 8px solid var(--signal); display: flex; flex-direction: column; gap: 18px; padding: 32px 28px; min-height: 0; }
+.cert h2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(2rem, 5vw, 2.6rem); line-height: 1; }
+.cert .name { font-family: var(--f-display); font-weight: 700; font-size: clamp(2.5rem, 7vw, 3.8rem); line-height: 1.05; letter-spacing: -0.02em; color: var(--slate); overflow-wrap: anywhere; }
+.cert .plates { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border: 0; gap: 4px; }
+.cert .plates div { padding: 6px 6px; text-align: center; display: flex; flex-direction: column; gap: 2px; background: var(--green); color: var(--paper); border-radius: 4px; }
+.cert .plates .r { font-family: var(--f-label); font-weight: 600; font-size: 13px; }
+.cert .plates .d { font-family: var(--f-label); font-size: 11px; opacity: 0.85; }
+@media (max-width: 520px) { .cert .plates { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.cert .q { font-style: italic; font-size: var(--s-4); max-width: var(--measure); border-left: 3px solid var(--signal); padding-left: 12px; }
+.cert-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--rule); padding-top: 12px; }
+.checklist { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.checklist li { display: flex; gap: 10px; align-items: baseline; }
+
+/* ── Readings ── */
+.readings { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; border-top: 1px solid var(--rule); max-width: 46rem; }
+.reading { display: flex; flex-direction: column; gap: 8px; padding: 18px 0; border-bottom: 1px solid var(--hairline); }
+.reading + .reading { margin-top: 0; }
+.reading .cite { font-size: var(--s-3); line-height: 1.5; padding-left: 1.4em; text-indent: -1.4em; }
+.reading p { max-width: var(--measure); font-size: var(--s-3); }
+.reading .links { display: flex; gap: 14px; flex-wrap: wrap; align-items: baseline; font-size: var(--s-2); }
+.reading .doi { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.82em; color: var(--ink-muted); overflow-wrap: anywhere; }
+.reading .label a { color: var(--signal); }
+.inline-confirm { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 10px 12px; border: 1px solid var(--wrong); border-radius: var(--radius); background: var(--wrong-tint); }
+
+.site-foot { border-top: 1px solid var(--hairline); }
+.site-foot .inner { padding-block: 18px 28px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 0.85rem; color: var(--ink-muted); }
+
+/* dark mode: lift panels off the page instead of sinking them */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .fig-cap, :root:not([data-theme="light"]) table.log th { background: var(--paper-raised); } }
+:root[data-theme="dark"] .fig-cap, :root[data-theme="dark"] table.log th { background: var(--paper-raised); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+@media print {
+  .masthead, .no-print { display: none !important; }
+  body { background: #fff; }
+}
+</style>
+<style>
+/* Shared additions: both themes */
+.evidence { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.evidence > div + div { border-left: 0; border-top: 0; }
+.evidence > div:nth-child(even) { border-left: 1px solid var(--hairline); }
+.evidence > div:nth-child(n+3) { border-top: 1px solid var(--hairline); }
+@media (max-width: 720px) {
+  .evidence { grid-template-columns: 1fr; }
+  .evidence > div:nth-child(even) { border-left: 0; }
+  .evidence > div + div { border-top: 1px solid var(--hairline); }
+}
+.jump { display: flex; gap: 16px; flex-wrap: wrap; }
+.jump button { background: none; border: 0; padding: 0; cursor: pointer; color: var(--signal); font-family: var(--f-label); font-size: var(--s-2); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.conf-key { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; font-size: var(--s-2); color: var(--ink-muted); }
+.conf-key li + li { margin-top: 0; }
+.conf-key strong { color: var(--ink); }
+.checks { border: 1px solid var(--hairline); padding: 10px 14px 12px; margin: 0; display: flex; flex-direction: column; gap: 8px; max-width: var(--measure); min-width: 0; background: var(--paper); }
+.checks legend { font-family: var(--f-label); font-weight: 600; font-size: var(--s-2); padding: 0 4px; }
+.checks label { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; align-items: start; cursor: pointer; font-size: var(--s-2); line-height: 1.45; }
+.checks input { accent-color: var(--signal); margin: 3px 0 0; }
+.hint-box summary, .model summary { cursor: pointer; color: var(--signal); font-family: var(--f-label); font-weight: 600; font-size: var(--s-2); }
+.hint-box p { margin-top: 6px; font-size: var(--s-2); }
+.model { border-top: 1px solid var(--hairline); padding-top: 14px; display: flex; flex-direction: column; gap: 10px; }
+.model .prose { font-size: var(--s-3); margin-top: 10px; }
+.model .note { margin-top: 10px; }
+.next-link { font-family: var(--f-label); font-weight: 600; color: var(--signal); }
+.index .num-final { font-size: var(--s-3); letter-spacing: 0.04em; }
+.cert-answer { display: flex; flex-direction: column; gap: 6px; }
+.cert-answer .q { display: flex; flex-direction: column; gap: 8px; font-style: normal; font-size: var(--s-3); }
+</style>
+
+<header class="masthead wrap">
+  <div class="inner">
+    <div class="mast-row">
+      <a class="brand" href="#key" aria-label="Bearings, course overview">
+        <span class="wordmark">Bearings</span>
+      </a>
+      <nav class="nav" aria-label="Course">
+        <a href="#key" data-nav="key">Overview</a>
+        <a href="#reading" data-nav="reading">Further reading</a>
+        <a href="#record" data-nav="record">Progress</a>
+        <a href="#certificate" data-nav="certificate">Certificate</a>
+      </nav>
+    </div>
+    <div class="scalebar" id="scalebar" aria-label="Modules"></div>
+  </div>
+</header>
+
+<main class="wrap"><div class="inner" id="view" aria-live="polite"></div></main>
+<footer class="site-foot wrap"><div class="inner"><span>Bearings · a short course in research and AI literacy</span><span>Course by Alfred Wallace · Your progress stays in your browser</span></div></footer>
+
+<script>
+window.THEME = { unit: "Module", arabic: true, noMark: true, credit: "Course by Alfred Wallace",
+  canvas: { ink: "#1d2329", muted: "#5a6470", rule: "#c4c9d0", paper: "#ffffff", slate: "#2b5f9e", signal: "#2b5f9e", strip: "#2f6b45", stripText: "#e6f1e9",
+    display: "'Public Sans', Arial, sans-serif", text: "'Source Serif 4', Georgia, serif", label: "'Public Sans', Arial, sans-serif", displayWeight: 700, simpleFrame: true, upper: false,
+    fontsToLoad: ["700 64px 'Public Sans'", "600 16px 'Public Sans'", "400 20px 'Source Serif 4'", "italic 400 20px 'Source Serif 4'"] } };
+/* Bearings — course content.
+   Real sources were checked against Crossref and OpenAlex on 6 Nov 2026.
+   Every citation in the course points to a real record. The problems learners find are
+   misrepresentation (a real source cited for more than it shows, or the opposite) and
+   irrelevance (a real source on a neighboring question). */
+
+const SOURCES = {
+  mueller2014: {
+    authors: "Mueller, P. A., & Oppenheimer, D. M.",
+    year: "2014",
+    title: "The pen is mightier than the keyboard: Advantages of longhand over laptop note taking",
+    journal: "Psychological Science", vol: "25", issue: "6", pages: "1159–1168",
+    doi: "10.1177/0956797614524581"
+  },
+  morehead2019: {
+    authors: "Morehead, K., Dunlosky, J., & Rawson, K. A.",
+    year: "2019",
+    title: "How much mightier is the pen than the keyboard for note-taking? A replication and extension of Mueller and Oppenheimer (2014)",
+    journal: "Educational Psychology Review", vol: "31", issue: "3", pages: "753–780",
+    doi: "10.1007/s10648-019-09468-2"
+  },
+  sana2013: {
+    authors: "Sana, F., Weston, T., & Cepeda, N. J.",
+    year: "2013",
+    title: "Laptop multitasking hinders classroom learning for both users and nearby peers",
+    journal: "Computers & Education", vol: "62", issue: "", pages: "24–31",
+    doi: "10.1016/j.compedu.2012.10.003"
+  },
+  vanderweel2024: {
+    authors: "Van der Weel, F. R., & Van der Meer, A. L. H.",
+    year: "2024",
+    title: "Handwriting but not typewriting leads to widespread brain connectivity: A high-density EEG study with implications for the classroom",
+    journal: "Frontiers in Psychology", vol: "14", issue: "", pages: "Article 1219945",
+    doi: "10.3389/fpsyg.2023.1219945"
+  },
+  delgado2018: {
+    authors: "Delgado, P., Vargas, C., Ackerman, R., & Salmerón, L.",
+    year: "2018",
+    title: "Don't throw away your printed books: A meta-analysis on the effects of reading media on reading comprehension",
+    journal: "Educational Research Review", vol: "25", issue: "", pages: "23–38",
+    doi: "10.1016/j.edurev.2018.09.003"
+  },
+  flanigan2024: {
+    authors: "Flanigan, A. E., Wheeler, J. M., Colliot, T., Lu, J., & Kiewra, K. A.",
+    year: "2024",
+    title: "Typed versus handwritten lecture notes and college student achievement: A meta-analysis",
+    journal: "Educational Psychology Review", vol: "36", issue: "", pages: "",
+    doi: "10.1007/s10648-024-09914-w"
+  },
+  urry2021: {
+    authors: "Urry, H. L., et al.",
+    year: "2021",
+    title: "Don't ditch the laptop just yet: A direct replication of Mueller and Oppenheimer's (2014) Study 1 plus mini meta-analyses across similar studies",
+    journal: "Psychological Science", vol: "32", issue: "3", pages: "326–339",
+    doi: "10.1177/0956797620965541"
+  }
+};
+
+/* The composed AI answer used across the course. It is written for this course;
+   no real tool produced it. */
+const CASE_ANSWER = [
+  { id: "s1", text: "Handwriting your notes is clearly the better choice for learning." },
+  { id: "s2", text: "In a well-known 2014 study, students who took notes on laptops did worse on conceptual questions than students who wrote by hand.", cite: 1 },
+  { id: "s3", text: "Researchers have since confirmed this result many times.", cite: 2 },
+  { id: "s4", text: "Laptop users tend to copy lectures word for word, which leads to shallower processing.", cite: 1 },
+  { id: "s5", text: "Typing also weakens long-term memory for course material by about 30 percent.", cite: 3 },
+  { id: "s6", text: "Laptops distract the students sitting nearby, not only the person using one.", cite: 4 },
+  { id: "s7", text: "Experts agree that every student should switch to paper.", cite: 5 },
+  { id: "s8", text: "If you want better grades, leave the laptop at home." }
+];
+
+const CASE_REFS = [
+  { n: 1, text: "Mueller, P. A., & Oppenheimer, D. M. (2014). The pen is mightier than the keyboard: Advantages of longhand over laptop note taking. Psychological Science, 25(6), 1159–1168.", doi: "10.1177/0956797614524581" },
+  { n: 2, text: "Morehead, K., Dunlosky, J., & Rawson, K. A. (2019). How much mightier is the pen than the keyboard for note-taking? A replication and extension of Mueller and Oppenheimer (2014). Educational Psychology Review, 31(3), 753–780.", doi: "10.1007/s10648-019-09468-2" },
+  { n: 3, text: "Van der Weel, F. R., & Van der Meer, A. L. H. (2024). Handwriting but not typewriting leads to widespread brain connectivity: A high-density EEG study with implications for the classroom. Frontiers in Psychology, 14, Article 1219945.", doi: "10.3389/fpsyg.2023.1219945" },
+  { n: 4, text: "Sana, F., Weston, T., & Cepeda, N. J. (2013). Laptop multitasking hinders classroom learning for both users and nearby peers. Computers & Education, 62, 24–31.", doi: "10.1016/j.compedu.2012.10.003" },
+  { n: 5, text: "Delgado, P., Vargas, C., Ackerman, R., & Salmerón, L. (2018). Don't throw away your printed books: A meta-analysis on the effects of reading media on reading comprehension. Educational Research Review, 25, 23–38.", doi: "10.1016/j.edurev.2018.09.003" }
+];
+
+const PLATES = [
+  /* ───────────────────────────── I ───────────────────────────── */
+  {
+    n: 1, roman: "I", slug: "interrogate", name: "Interrogate an answer",
+    bearing: "Fluency is not evidence.",
+    minutes: 40,
+    reading: `
+<p>Most research now starts with an answer, not a question. Someone asks a chatbot, skims a search summary, watches a video or hears a claim from a friend. The answer arrives first. Whether anyone checks it comes later, if at all.</p>
+<p>So the first move is to take the answer apart before deciding whether to trust it. An answer is a bundle of separate claims held together by confident prose. Some of those claims can be checked. Some are too vague to check until you pin them down. Some are judgments or advice that rest on the others.</p>
+<p>AI tools make this move more important, not less. A language model is trained to produce text that reads like a good answer. That is a different thing from producing an answer that has been checked. The smoothness of the prose tells you about the writing. It tells you nothing about whether the claims are true. The same holds for a polished website or a persuasive speaker.</p>
+<p>Three habits help:</p>
+<ul>
+<li><strong>Sort the claims.</strong> Mark which are specific enough to check, which are vague (“studies show,” “experts agree”), and which are advice or judgment.</li>
+<li><strong>Find the load-bearing claim.</strong> Ask which claim the conclusion depends on most. If that one fails, the advice falls with it. Check it first.</li>
+<li><strong>Ask how you would know if it were wrong.</strong> The answer points you to the evidence that could test the claim. If nothing could, the claim isn't telling you anything you could check.</li>
+</ul>
+<p>Here is the first move on a single sentence. “Handwriting your notes is clearly the better choice for learning” reads as advice, but it holds a factual claim (handwriting leads to more learning than typing) and a claim about size (“clearly”). The factual claim is the one to check. “Clearly” tells you how strong the evidence would have to be.</p>
+<p>How much checking an answer needs depends on what you'll do with it. A claim that decides a grade, a purchase or someone's health deserves more than one you're idly curious about. Scrutiny should scale with the stakes, and when the stakes are low it's fine to settle on a provisional answer.</p>
+<p>Apply the same questions to every answer, whatever its source. Treat claims you already agree with the same way, since agreement is exactly when errors slip past.</p>`,
+    key: [
+      ["Claim", "One statement that could be true or false on its own."],
+      ["Vague claim", "A claim that needs pinning down (which studies? which experts?) before it can be checked."],
+      ["Load-bearing claim", "The claim a conclusion depends on most."],
+      ["Fluency", "How smooth and confident the writing is. A property of the prose, not of the facts."]
+    ],
+    exercise: {
+      intro: `<p>This answer was composed for the course to imitate what a chatbot might say when asked, “Should I take notes by hand or on my laptop?” You will carry it through all six modules.</p>`,
+      parts: [
+        {
+          id: "purpose", type: "write", graded: true,
+          prompt: "Before you start: suppose you'd asked this question yourself. What would the answer help you decide or understand?",
+          fields: [{ id: "why", label: "What the answer is for", min: 15, rows: 2, placeholder: "For example: whether to bring my laptop to a big lecture course" }],
+          doneMsg: "Recorded. Keep it in mind: how much checking an answer deserves depends on what you'll use it for."
+        },
+        {
+          id: "tag", type: "tag", graded: true, threshold: 6,
+          prompt: "Sort each sentence. Is it a specific claim you could look up, a vague claim that needs pinning down first, or advice and judgment?",
+          options: ["Specific claim", "Vague claim", "Advice or judgment"],
+          items: [
+            { id: "s1", text: CASE_ANSWER[0].text, key: 2, why: "A conclusion stated as a recommendation. It is only as strong as the claims under it." },
+            { id: "s2", text: CASE_ANSWER[1].text, key: 0, why: "A year, a comparison and an outcome. You could find this study and see what it reports." },
+            { id: "s3", text: CASE_ANSWER[2].text, key: 1, why: "Which researchers? How many times? Confirmed how? It needs pinning down." },
+            { id: "s4", text: CASE_ANSWER[3].text, key: 0, why: "A specific mechanism you could find tested in a study." },
+            { id: "s5", text: CASE_ANSWER[4].text, key: 0, why: "A precise number. Precise numbers are easy to check, which makes them worth checking." },
+            { id: "s6", text: CASE_ANSWER[5].text, key: 0, why: "Specific and testable: who is distracted, and by what." },
+            { id: "s7", text: CASE_ANSWER[6].text, key: 1, why: "Which experts? Agree on what evidence? Appeals to unnamed experts need pinning down." },
+            { id: "s8", text: CASE_ANSWER[7].text, key: 2, why: "Advice. It inherits whatever is wrong with the claims it rests on." }
+          ]
+        },
+        {
+          id: "load", type: "choice", graded: true,
+          prompt: "Which sentence would most change the advice if it turned out to be false?",
+          options: [
+            { text: "“Researchers have since confirmed this result many times.”", correct: true, why: "The word “clearly” in the conclusion rests on the result holding up. One study can be a fluke; a result confirmed many times is not. If the confirmations are missing, the advice weakens most." },
+            { text: "“In a well-known 2014 study…”", why: "Important, but a single study rarely settles a question. The conclusion leans harder on the claim that the result has been repeated." },
+            { text: "“Laptops distract the students sitting nearby…”", why: "This is a separate point about distraction. It doesn't bear on whether handwriting itself helps learning." },
+            { text: "“If you want better grades, leave the laptop at home.”", why: "This is the advice itself, not a claim it rests on." }
+          ]
+        },
+        {
+          id: "hidden", type: "choice", graded: true,
+          prompt: "The last sentence, “If you want better grades, leave the laptop at home,” is advice. Which factual claim is it quietly resting on?",
+          options: [
+            { text: "That typing notes leads to lower grades than writing them by hand.", correct: true, why: "Advice inherits its factual claims. If typing doesn't actually lower grades, the advice has nothing to stand on, so that's the claim to check." },
+            { text: "That laptops are too heavy and expensive to carry to class every day.", why: "Nothing in the answer is about cost or weight. The advice rests on a claim about learning." },
+            { text: "That students who own laptops get lower grades than students who don't.", why: "Close, but the answer is about how notes are taken, not who owns a laptop." },
+            { text: "That grades are the only thing that matters about a course.", why: "That's a value some people hold, but the advice doesn't depend on it. It depends on a factual claim about notes and grades." }
+          ]
+        }
+      ]
+    },
+    bank: [
+      { q: "An AI tool answers your question in fluent, confident prose with no hedging. What does the fluency tell you about accuracy?",
+        a: ["Nothing by itself. Fluency and accuracy are separate properties of an answer.", "The answer is probably right, because these tools add hedges when they aren't sure.", "The answer is probably wrong, because real experts almost always hedge their claims.", "It is reliable if the tool is a paid version trained on better data."],
+        why: "Language models produce smooth prose whether or not the claims are correct, so fluency carries no signal either way." },
+      { q: "An answer says “studies show that sleep loss lowers grades,” and names no study. What is the best first move?",
+        a: ["Treat it as a claim to pin down: which studies, showing what, in whom?", "Accept it, since the answer refers to research rather than opinion.", "Reject it, since a claim that doesn't name its studies is probably false.", "Ask the tool to restate the claim more confidently and with more detail."],
+        why: "Vague claims aren't false by default. They just can't be checked until you know what they refer to." },
+      { q: "Which of these is a specific claim you could check?",
+        a: ["A named agency reported the share of US workers at home in 2023.", "Remote work is the future of employment for most office jobs.", "Everyone should try remote work at least once in their career.", "Remote work feels freer than office work for most people who try it."],
+        why: "Only the first names a source, a measure and a time. The others are predictions, advice or feelings." },
+      { q: "Two AI tools give you different answers to the same question. What is the most reasonable reading?",
+        a: ["One may be wrong, or they used different sources. It marks where to look.", "The newer tool is right, since it was trained on more recent information.", "The longer, more detailed answer is right, since it shows more reasoning.", "The question has no single answer, so either response is equally good."],
+        why: "Disagreement is useful information. It marks the claims that need checking." },
+      { q: "You've broken an answer into separate claims. Which should you check first?",
+        a: ["The one the conclusion depends on most, since it carries the most weight.", "Whichever claim comes first, since answers usually lead with the main point.", "The one that's quickest to look up, so you can make progress fast.", "The one with the most numbers, since numbers are the most precise."],
+        why: "If the load-bearing claim fails, the conclusion fails with it, so it earns your first check." },
+      { q: "A claim reaches you from a video, a website, a friend and an AI tool. Which questions apply?",
+        a: ["The same for all four: what's claimed, on what basis, and could it be wrong?", "Only the AI tool's claim needs checking, since the others come from people.", "Only claims that include numbers or statistics need to be checked.", "Claims from friends can be trusted, since they have no reason to mislead you."],
+        why: "The source changes what you can find out about the claim, not whether to ask." },
+      { q: "“Coffee drinkers live longer.” What kind of claim is this, and what would you want to know?",
+        a: ["It reports an association. Does it show cause, and what was compared?", "It's an opinion about coffee, so there's nothing in it you could check.", "It's a prediction about the future, so you can only wait and see.", "It's a definition of a healthy habit, so it's true by its meaning."],
+        why: "Claims that two things go together are common in health news. The question is whether something else explains the link." },
+      { q: "An answer says something you already believe. What should you do?",
+        a: ["Check it as hard as any other claim, since agreement is when errors slip past.", "Skip checking it, since your existing knowledge already supports it.", "Check it only if someone you trust tells you that it's wrong.", "Check only the sources it cites, since the claim itself matches yours."],
+        why: "Confirmation bias makes agreeable claims feel checked when they aren't." },
+      { q: "Why is “How would I know if this were wrong?” a useful question?",
+        a: ["It points to the evidence that could test the claim.", "It shows the claim is false, since true claims can't be imagined wrong.", "It shows the claim can't be tested, so you can set it aside.", "It means you can skip the sources and reason it out on your own."],
+        why: "Thinking about what would disprove a claim tells you what to look for." },
+      { q: "An answer says “62% of students prefer online classes.” What do you need before relying on it?",
+        a: ["Where the figure came from, who was asked, and when.", "Nothing more. A precise percentage shows the number was measured.", "Whether the number was rounded, since exact figures are more reliable.", "Whether other AI tools repeat the same figure when you ask them."],
+        why: "A number without its origin is just a claim with a decimal point. Repetition by other tools may come from the same unchecked origin." }
+    ]
+  },
+
+  /* ───────────────────────────── II ───────────────────────────── */
+  {
+    n: 2, roman: "II", slug: "trace", name: "Trace it to the source",
+    bearing: "A citation is a promise, not proof.",
+    minutes: 50,
+    reading: `
+<p>A citation makes two promises: that the source exists, and that it says what the writer claims it says. Either promise can be broken. Tracing is how you find out.</p>
+<p>The first promise is now the easier one. Early chatbots often invented references outright, and that still happens, but most current tools search for real sources before they answer. The live problem is the second promise. A tool, a reporter or a busy writer finds a real paper and attaches a claim to it that the paper doesn't make. Sometimes the paper says less than claimed: a lab test of short-term recall becomes proof of higher graduation rates. Sometimes it says the opposite. Sometimes it's simply about a neighboring question, close enough in topic to look right in a reference list.</p>
+<p>A real citation in the right subject area is the most convincing kind of unsupported claim. It passes every quick check. Only reading catches it.</p>
+<p>To check a citation:</p>
+<ul>
+<li><strong>Open it.</strong> Paste the DOI after <code>https://doi.org/</code>, or search the exact title. This confirms the source exists, which is necessary but no longer tells you much.</li>
+<li><strong>Ask what it studied.</strong> Who or what was studied, what was measured, and what was compared? A study of reading on screens is not a study of note-taking.</li>
+<li><strong>Find what it concluded.</strong> Read at least the abstract. Compare its result with the sentence that cites it, word by word if you need to.</li>
+<li><strong>Check the size of the claim.</strong> Does the sentence claim more than the source shows: a number it never reports, a cause where it found a link, everyone where it studied twenty people?</li>
+</ul>
+<p>Two more habits travel well beyond journal articles. When a claim appears on many websites, look for where it started; repetition is not independent confirmation. And remember that academic citations have DOIs, but most claims in the wild do not. When a claim comes from a website, an organization or a video, trace it laterally: open a new tab and see what independent sources say about who is behind it. That is called lateral reading.</p>`,
+    key: [
+      ["DOI", "Digital Object Identifier. A permanent ID that resolves to an item's record at doi.org."],
+      ["Misrepresentation", "A real source cited for more than it shows, or for the opposite."],
+      ["Off-topic citation", "A real source on a neighboring question, cited as if it answered this one."],
+      ["Lateral reading", "Leaving a source to check what others say about it."]
+    ],
+    exercise: {
+      intro: `<p>Here is the reference list from the note-taking answer. Check each one yourself. Use <a href="https://doi.org/" target="_blank" rel="noopener">doi.org</a>, <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a> or your library's search. Every reference here is real, so finding it is only the first step. Read each abstract and compare it with the sentence that cites it.</p>
+<p>Read the abstract on the publisher's or database's page itself, not a search engine's summary of it. An AI overview of a paper is another answer, not the source, and it may repeat the very misreading you're checking for.</p>`,
+      parts: [
+        {
+          id: "verdicts", type: "tag", graded: true, threshold: 5,
+          prompt: "For each reference, decide what you found.",
+          options: ["Supports the sentence", "Misrepresented: says less, or the opposite", "Off-topic: about a different question"],
+          items: CASE_REFS.map(r => {
+            const sent = CASE_ANSWER.find(s => s.cite === r.n);
+            const keys = { 1: 0, 2: 1, 3: 1, 4: 0, 5: 2 };
+            const whys = {
+              1: "The DOI resolves and the abstract reports that laptop note-takers did worse on conceptual questions, as the sentence says.",
+              2: "This is a replication, and it didn't confirm the original result: its effects were small and not statistically reliable. That isn't evidence for laptops, but it can't support a claim that the result was confirmed many times.",
+              3: "The study recorded brain activity in 36 students while they wrote single words by hand or typed them. It measured no memory or course learning, and it reports no 30 percent figure. Its authors argue the brain patterns are good for learning, but the sentence turns that argument into a result they never measured.",
+              4: "The DOI resolves and the abstract reports that multitasking on a laptop lowered scores for users and for peers in direct view of the screen. The study used a simulated classroom, and “distract” matches what it tested: laptops used for other things during the lecture. That's a fair summary of the source.",
+              5: "A real and well-regarded meta-analysis, but of reading comprehension on paper versus screens, not note-taking. It also doesn't say every student should switch to anything. Same neighborhood, different question."
+            };
+            return { id: "r" + r.n, text: `<span class="ref-n">[${r.n}]</span> ${r.text} <span class="doi">doi: ${r.doi}</span><span class="cited-for">Cited for: “${sent ? sent.text : ""}”</span>`, key: keys[r.n], why: whys[r.n] };
+          })
+        },
+        {
+          id: "after", type: "choice", graded: true,
+          prompt: "After tracing, what is left of the sentence “Researchers have since confirmed this result many times”?",
+          options: [
+            { text: "Nothing supports it. Its only citation is a replication that didn't confirm the result.", correct: true, why: "The load-bearing claim from Module 1 is the one that failed. That changes the whole answer, which is why you check it first." },
+            { text: "It's supported, because the cited paper is a real replication.", why: "A real paper isn't support unless it says what's claimed. This replication didn't confirm the original result." },
+            { text: "It's off-topic, because the paper studies a different question.", why: "The paper is squarely on this question. The problem is that it didn't confirm the result." },
+            { text: "It can't be judged without reading every study on the topic.", why: "You don't need every study to see that this citation doesn't back this sentence." }
+          ]
+        }
+      ]
+    },
+    bank: [
+      { q: "A cited study recorded students' brain activity while typing. The answer says it proves typing lowers grades. What's the problem?",
+        a: ["The claim goes beyond what was measured: brain activity, not grades.", "Nothing, since brain activity is a direct measure of learning.", "The study must be fabricated, since its findings don't match the claim.", "Only the date matters; recent brain studies settle questions like this."],
+        why: "A source can be real and on topic and still not show what it's cited for. Compare what was measured with what is claimed." },
+      { q: "You paste a DOI after https://doi.org/ and see “DOI not found.” What follows?",
+        a: ["The citation is likely wrong. Search the title and authors to be sure.", "The article is behind a paywall, so you need a library login to see it.", "The DOI system is temporarily down. Wait a day and try again.", "Nothing much. DOIs often fail to resolve for perfectly real articles."],
+        why: "A registered DOI resolves even when the article is paywalled. A failure points to a fabrication or a typo." },
+      { q: "An answer about note-taking cites a strong meta-analysis on reading from screens versus paper. Does it support the answer?",
+        a: ["Not directly. It answers a neighboring question, not this one.", "Yes, since a meta-analysis outranks any single study on a topic.", "Yes, since both questions are about paper versus screens.", "No, because meta-analyses can't be cited for practical advice."],
+        why: "Topical overlap isn't support. Check what question the source actually asked." },
+      { q: "Eight websites repeat the same statistic. What does that show?",
+        a: ["Possibly one origin copied eight times. Trace it back.", "It has been independently confirmed by eight different sources.", "It is probably false, since misinformation spreads faster than facts.", "It is a primary source, since it appears on so many websites."],
+        why: "Repetition is not independent confirmation. Copies inherit the original's errors." },
+      { q: "A news article says “a new study found…” What is the best first step to trace it?",
+        a: ["Find the study itself, using the names, journal or details in the article.", "Trust the reporter's summary, since journalists are trained to check facts.", "Search the headline to see whether other outlets report the same thing.", "Read the comments, since readers often post corrections to news stories."],
+        why: "Other coverage often repeats the same summary. The study is the source." },
+      { q: "You can only see a source's abstract because of a paywall. What is a reasonable step?",
+        a: ["Check library access, interlibrary loan or an open version before relying on it.", "Cite it based on the title and abstract, since they summarize the paper.", "Assume it supports the claim, since the author cited it for that purpose.", "Replace it with a free source that looks similar and says the same thing."],
+        why: "Libraries exist partly for this. Authors also often post open versions." },
+      { q: "What is lateral reading?",
+        a: ["Leaving a source to see what others say about who is behind it.", "Reading a page carefully from top to bottom before judging it.", "Reading only a website's About page to see who runs it.", "Skimming the headings of a source before reading it in full."],
+        why: "Fact-checkers open new tabs. A site's description of itself is the least independent view of it." },
+      { q: "Article A cites Article B for a claim. How do you check it?",
+        a: ["Look at Article B and see whether it says what Article A says it does.", "Trust Article A, since a peer-reviewed article checks its own citations.", "Count how often Article A has been cited, since impact shows accuracy.", "Check the ranking of Article A's journal, since top journals check sources."],
+        why: "The claim lives in B. Only B can confirm it." },
+      { q: "What does following citations forward mean?",
+        a: ["Finding later works that cite the source after it was published.", "Reading through the source's own list of references at the end.", "Reading the next issue of the journal the source appeared in.", "Looking for a newer edition or version of the same source."],
+        why: "Backward follows the reference list; forward follows who cited it since. Forward is how you find replications and critiques." },
+      { q: "An AI research tool links each claim to a source. Do you still need to click through?",
+        a: ["Yes. A real link can be attached to the wrong claim.", "No. A linked claim has already been checked by the tool.", "Only for claims with numbers, since those are the risky ones.", "Only when a link is broken or leads to an error page."],
+        why: "Retrieval tools rarely invent sources, but they still attach claims to the wrong ones. The link tells you where to check, not that it checks out." }
+    ]
+  },
+
+  /* ───────────────────────────── III ───────────────────────────── */
+  {
+    n: 3, roman: "III", slug: "search", name: "Search to test",
+    bearing: "Look for what would change your mind.",
+    minutes: 50,
+    reading: `
+<p>Most searching is confirming. You have an answer, you look for support, and the first result that agrees ends the search. Searching to test means also looking for the evidence that would complicate or overturn the answer.</p>
+<p>Different tools show you different slices of the world. It helps to think of three layers:</p>
+<ul>
+<li><strong>The collection.</strong> What the tool can reach at all. Google Scholar, a library search and an AI research tool each cover different material, and none covers everything.</li>
+<li><strong>The ranking.</strong> How results are ordered. “Relevance” is an algorithm's estimate of a match, not a judgment of quality or importance.</li>
+<li><strong>The interface.</strong> What sits on top: a list of results, a generated summary, a chat. Each one decides what you see first and what you never see.</li>
+</ul>
+<p>The fastest way to learn how a tool works is to predict, then look. Before you search, guess what it will find. The gap between your guess and the result teaches you more than a description of the tool could.</p>
+<p>Two practical points. Fields use their own vocabulary, so a search that finds nothing may just be using the wrong words. Borrow terms from the best result you have. And when a famous study exists, look for its replications, either by adding “replication” to your search or by using a tool's “Cited by” link to search inside the later papers that cite the original. A replication is the field testing its own result.</p>`,
+    key: [
+      ["Collection", "What a tool can search at all."],
+      ["Ranking", "The order a tool puts results in, and the rules behind it."],
+      ["Interface", "The layer you see: a list, a summary, a chat."],
+      ["Replication", "A study that repeats an earlier one to test whether the result holds."],
+      ["Known-item search", "Looking for one specific thing you can already describe."]
+    ],
+    exercise: {
+      intro: `<p>The 2014 note-taking study has been tested by other researchers. One team repeated its first experiment directly and published the result in <em>Psychological Science</em> in 2021. Find that article.</p>
+<p>If you can't use a library search or an AI tool, choose “Didn't try” for that line. The exercise still counts.</p>
+<details class="hint-box"><summary>Stuck?</summary><p>Look up the 2014 study in Google Scholar and open its “Cited by” list. Then search within those citing articles for <em>replication</em>.</p></details>`,
+      parts: [
+        {
+          id: "predict", type: "predict", graded: false,
+          prompt: "Before you search, predict. Then search and record what happened.",
+          items: [
+            { id: "p1", label: "Will Google Scholar show the 2021 replication on the first page for the search: laptop longhand replication?" },
+            { id: "p2", label: "Will your library search (or another database you can use) show it on the first page for the same words?" },
+            { id: "p3", label: "If you ask an AI chatbot for the DOI of this replication, will it give the right one?" }
+          ],
+          choices: ["Yes", "No", "Not sure"]
+        },
+        {
+          id: "find", type: "fields", graded: true,
+          prompt: "Enter the DOI of the 2021 direct replication.",
+          fields: [
+            { id: "doi", label: "DOI", placeholder: "10.xxxx/xxxxx", accept: ["10.1177/0956797620965541"], normalize: "doi",
+              why: "The article is Urry et al. (2021), “Don't ditch the laptop just yet,” Psychological Science 32(3), 326–339." }
+          ]
+        },
+        {
+          id: "log", type: "write", graded: true,
+          prompt: "Keep a short log of how you found it.",
+          fields: [
+            { id: "tool", label: "Tool you used", min: 3, rows: 1, placeholder: "Google Scholar, a library search, an AI tool…" },
+            { id: "q1", label: "Your first search", min: 3, rows: 1 },
+            { id: "got", label: "What came back", min: 15, rows: 2 },
+            { id: "q2", label: "What you did next: a new search, a “Cited by” list, or nothing because it was already there", min: 3, rows: 1 },
+            { id: "whyq", label: "Why you made that move", min: 15, rows: 2 }
+          ],
+          doneMsg: "Recorded. A log like this is how you notice your own search habits."
+        },
+        {
+          id: "result", type: "choice", graded: true,
+          prompt: "Read the replication's abstract. What did it find?",
+          options: [
+            { text: "Laptop note-takers wrote more and copied more word for word, but quiz scores didn't differ reliably.", correct: true, why: "The note-taking pattern repeated; a reliable learning difference did not. The authors' small meta-analysis of similar studies showed the same pattern." },
+            { text: "Longhand note-takers scored much higher, confirming the original.", why: "That's what the original reported. The replication did not find it." },
+            { text: "Laptop note-takers scored much higher than longhand note-takers.", why: "The replication didn't find laptops better either. It found no reliable difference in either direction." },
+            { text: "The study could not be completed.", why: "It was completed and published, with data." }
+          ]
+        },
+        {
+          id: "complication", type: "write", optional: true,
+          prompt: "Optional: search to test the course's own story. Look for a review or meta-analysis of laptop versus handwritten notes published after 2021. What did you find?",
+          fields: [{ id: "found", label: "What you found, with its title or DOI", min: 0, rows: 2 }],
+          doneMsg: "Recorded. Module 4 picks this thread up."
+        }
+
+      ]
+    },
+    bank: [
+      { q: "Why might Google Scholar, a library search and an AI research tool return different results for the same words?",
+        a: ["They cover different material, rank it differently and present it differently.", "At least one of them is broken or out of date and should be avoided.", "Mostly because of paid placement, which pushes sponsored papers higher.", "They don't really differ. They all search the same index underneath."],
+        why: "Collection, ranking and interface each differ between tools." },
+      { q: "Your search returns nothing useful. What is the most likely fix?",
+        a: ["Use the words the field uses, borrowing terms from any good result.", "Conclude that no research exists on the topic and choose a new one.", "Add more words to the same search to make it more specific.", "Type the question as a full sentence so the tool understands it."],
+        why: "Empty results usually mean a vocabulary mismatch, not an empty field." },
+      { q: "What does it mean to search to test rather than to confirm?",
+        a: ["Also looking for evidence that would complicate or contradict the answer.", "Searching only peer-reviewed sources so that the results can be trusted.", "Searching until you find a reliable source that agrees with the answer.", "Searching one database thoroughly instead of many superficially."],
+        why: "Confirming searches stop at the first agreement. Testing searches look for disagreement too." },
+      { q: "You know the exact article you want. What is the most efficient approach?",
+        a: ["A known-item search: the exact title in quotes, or the DOI.", "A broad topic search, so you also see related articles nearby.", "Asking an AI tool to summarize the topic and name the article.", "Browsing the journal's recent issues until you spot the article."],
+        why: "When you can describe the item, search for the item." },
+      { q: "An AI research tool says it searched 200 million papers. What does that number not tell you?",
+        a: ["What it left out, how it ranked results and whether it read full text.", "Nothing important. A collection that large covers everything published.", "Whether the results are peer reviewed. With that many, they always are.", "How fast the tool is. The number only describes its processing speed."],
+        why: "Coverage claims describe the collection, not what made it into your answer or why." },
+      { q: "A search returns 40,000 results. What is a reasonable next step?",
+        a: ["Narrow it by adding a key concept, a date range or a field limit.", "Read the first 40 results, since the best ones are always at the top.", "Give up on the topic, since that many results means it's too popular.", "Remove words from the search until the number of results drops."],
+        why: "Removing words broadens a search. Adding a concept or limit narrows it." },
+      { q: "A famous study has a replication. Why look for it?",
+        a: ["It tests whether the original result holds up when done again.", "Replications nearly always overturn the original, so cite the newer one.", "Citing more studies on the same point makes a paper look stronger.", "Newer studies are always more accurate than the studies they repeat."],
+        why: "A replication is direct evidence about the original's reliability, in either direction." },
+      { q: "Different fields describe the same topic in different words. What follows for searching?",
+        a: ["Search with several terms, and borrow vocabulary from relevant results.", "Pick the single best term and use it everywhere for consistency.", "Use only the most popular term, since it will find the most results.", "Let an AI tool choose one best term, since it knows every field."],
+        why: "One term reaches one field's vocabulary. Several terms reach several." },
+      { q: "Why predict what a search will find before running it?",
+        a: ["The gap between prediction and result shows how the tool works.", "Search tools use your prediction to improve their results.", "Many databases require a prediction before they will run a search.", "It makes the search faster, since you know what to look for."],
+        why: "Surprise is information. Without a prediction, nothing surprises you." },
+      { q: "A tool sorts results “by relevance.” What does that mean?",
+        a: ["An algorithm's guess at a match, not a judgment of quality.", "The most-cited and most influential results come first.", "The highest-quality, best-reviewed results come first.", "The newest results come first, since they are most current."],
+        why: "Relevance rankings are useful guesses with their own rules, mostly hidden." }
+    ]
+  },
+
+  /* ───────────────────────────── IV ───────────────────────────── */
+  {
+    n: 4, roman: "IV", slug: "weigh", name: "Weigh it",
+    bearing: "Confidence should match evidence.",
+    minutes: 45,
+    reading: `
+<p>Once you have the evidence, you have to decide what it supports. Two ideas do most of the work.</p>
+<p><strong>Fit for purpose.</strong> Sources aren't good or bad in the abstract. They are good for something. A lab experiment is strong evidence about what happened in that lab and weaker evidence about every classroom. A newspaper column is weak evidence that handwriting helps learning, and good evidence that people believe it does. Ask what you need the source to show, then ask whether it can show that.</p>
+<p><strong>A body of evidence beats a single study.</strong> One study can be a fluke, a product of its particular sample, or simply wrong. Replications, reviews and meta-analyses tell you whether a result holds up. Peer review checks that a paper is reasonable to publish. It doesn't certify that the conclusion is final.</p>
+<p>Then there is the question of how sure to be. Being calibrated means your confidence matches how often you turn out to be right. If you say “certain” about ten things, close to all ten should be true. If only six are, your certainty was worth less than it sounded.</p>
+<p>Bearings measures this. Every mastery check asks how sure you are of each answer, and your progress page shows how often you were right at each level of confidence. To master a module, you need five of six correct, no wrong answer marked Certain, and a confidence score of at least 20 out of 100. The score rewards saying Certain when you're right and Unsure when you might not be. Marking everything Unsure scores zero, because it doesn't show which answers you actually know. Being right is not enough. You also have to know when you might be wrong.</p>`,
+    key: [
+      ["Fit for purpose", "Whether a source can show the specific thing you need it to show."],
+      ["Meta-analysis", "A study that combines the results of many studies."],
+      ["Peer review", "Expert screening before publication. A filter, not a guarantee."],
+      ["Calibration", "How well your confidence matches how often you're right."]
+    ],
+    exercise: {
+      intro: `<p>You have now seen three studies on the note-taking question, plus a fourth that turns up when you search for reviews of the whole literature. Here is what each reported.</p>
+<div class="evidence">
+  <div><span class="ev-label">2014 · Original</span><p>Mueller &amp; Oppenheimer. Three experiments. Laptop note-takers copied more word for word and did worse on conceptual questions.</p></div>
+  <div><span class="ev-label">2019 · Replication</span><p>Morehead, Dunlosky &amp; Rawson. Two experiments. No reliable advantage for longhand; a meta-analysis of direct replications found small effects that weren't statistically significant.</p></div>
+  <div><span class="ev-label">2021 · Replication</span><p>Urry et al. Direct replication of the first experiment. Laptop notes were longer and more verbatim, but quiz scores didn't differ reliably. A small meta-analysis of eight similar studies showed the same pattern.</p></div>
+  <div><span class="ev-label">2024 · Meta-analysis</span><p>Flanigan, Wheeler, Colliot, Lu &amp; Kiewra. Combined 24 studies. Typing produced far more notes, but taking and reviewing handwritten notes led to a small advantage in achievement.</p></div>
+</div>
+<p class="note">The 2024 meta-analysis isn't open access, but its abstract is free on the <a href="https://doi.org/10.1007/s10648-024-09914-w" target="_blank" rel="noopener">publisher's page</a>.</p>`,
+      parts: [
+        {
+          id: "conclude", type: "choice", graded: true,
+          prompt: "Which conclusion do all four sources together best support?",
+          options: [
+            { text: "Handwriting may have a small edge, but smaller and less consistent than first reported.", correct: true, why: "Both pieces belong in the answer. The direct replications didn't reproduce the original effect, and the meta-analysis, which pools many more studies, found a small edge for handwritten notes. “Clearly better” overstates it, and so does “no difference.” Distraction is a separate question." },
+            { text: "There's no real difference between the two, since two direct replications found none.", why: "Not finding a reliable difference isn't the same as showing there is none, and the meta-analysis did find a small one." },
+            { text: "Handwriting is clearly better, since the original study and the meta-analysis agree.", why: "They point the same way, but the direct replications didn't reproduce the effect and the meta-analysis found it small. “Clearly” claims more than the evidence shows." },
+            { text: "No conclusion is possible yet, until every study on the topic has been read.", why: "You can reach a tentative, calibrated conclusion now and revise it if new evidence arrives." }
+          ]
+        },
+        {
+          id: "differ", type: "choice", graded: true,
+          prompt: "The replications and the meta-analysis seem to disagree. What is the most likely reason?",
+          options: [
+            { text: "They ask different things: one setup repeated, versus many varied studies pooled.", correct: true, why: "A direct replication asks whether one procedure gives the same result again. A meta-analysis asks what many different studies show on average, including ones where students reviewed their notes before the test. Both answers can be true at once." },
+            { text: "One of the two must be wrong, so pick whichever was published most recently.", why: "Newer isn't automatically better, and both can be right because they answer different questions." },
+            { text: "Meta-analyses mix good and bad studies together, so their results can't be trusted.", why: "Meta-analyses have real limits, but combining many studies is usually a strength. The point is to know what each one measured." },
+            { text: "The replications must have made mistakes, since the meta-analysis used more studies.", why: "A bigger pool doesn't make a careful replication wrong. They test different things." }
+          ]
+        },
+        {
+          id: "compare", type: "write", graded: true,
+          prompt: "Now compare two of the sources in your own words. The abstracts are enough; you don't need the full papers.",
+          fields: [
+            { id: "r21", label: "The 2021 replication: who took part, and what was measured?", min: 30, rows: 2 },
+            { id: "m24", label: "The 2024 meta-analysis: what did it combine, and what did it measure?", min: 30, rows: 2 },
+            { id: "prov", label: "Your provisional conclusion about handwriting versus typing", min: 40, rows: 3 },
+            { id: "next", label: "Would you keep searching? If so, for what?", min: 25, rows: 2, placeholder: "I'd look for… / I'd stop here because…" }
+          ],
+          doneMsg: "Recorded. You'll draw on this at the end of the course."
+        },
+        {
+          id: "fit", type: "tag", graded: true, threshold: 3,
+          prompt: "Match each purpose with the source that best fits it.",
+          options: ["The 2014 original study", "The 2024 meta-analysis", "A popular newspaper column praising handwriting"],
+          items: [
+            { id: "f1", text: "You need the exact procedure the original researchers used, for a methods class.", key: 0, why: "Only the original paper describes its own procedure in full." },
+            { id: "f2", text: "You want to know whether the handwriting effect holds up across studies.", key: 1, why: "A meta-analysis pools many studies, so it speaks to the body of evidence rather than one result." },
+            { id: "f3", text: "You're writing about how the handwriting advice spread into popular culture.", key: 2, why: "For this purpose, the column is primary evidence. It shows what the public was told." }
+          ]
+        }
+      ]
+    },
+    bank: [
+      { q: "Is a peer-reviewed article automatically correct?",
+        a: ["No. Review screens a paper for publication; it doesn't make it final.", "Yes. Peer review certifies that a paper's conclusions are correct.", "Only in the natural sciences, where results can be tested in a lab.", "Yes, once it has been cited many times by other researchers."],
+        why: "Peer review is a filter. Replications, reviews and later evidence still matter." },
+      { q: "One study found an effect. Three later replications didn't. What is most reasonable?",
+        a: ["Lower your confidence that the effect is real, pending more evidence.", "Keep believing the original, since it came first and set the agenda.", "Conclude that all four studies are wrong and the question is unanswerable.", "Decide by comparing the rankings of the journals that published them."],
+        why: "The body of evidence is the better guide than any single study." },
+      { q: "A study reports that two things are “associated.” What does that mean?",
+        a: ["They tend to occur together. That alone doesn't show one causes the other.", "One of the two things causes the other, as the study demonstrates.", "There is no meaningful relationship between the two things at all.", "The study has not yet been peer reviewed, so the result is tentative."],
+        why: "Association is a starting point for causal questions, not an answer to them." },
+      { q: "For a policy memo, you need how many students own laptops. Which source fits best?",
+        a: ["A recent survey from a research organization that explains its methods.", "A student's blog post describing laptop use in their own classes.", "A 2014 lab experiment comparing laptop and longhand note-taking.", "An AI summary that gives a precise percentage but cites no source."],
+        why: "The question is about a population count. A documented survey is built for that." },
+      { q: "An advocacy group publishes a report. What does its clear perspective mean for you?",
+        a: ["Read it with its perspective in mind and check its evidence.", "It is useless, since any source with a perspective is biased.", "It is more reliable, since the group cares deeply about the issue.", "It should be ignored, since advocacy groups only publish opinion."],
+        why: "Perspective is information about a source, not a verdict on it." },
+      { q: "You mark ten answers Certain and six turn out right. What does this show?",
+        a: ["You were overconfident. Your confidence should come down.", "You are well calibrated, since you got most of the answers right.", "You were underconfident, since six correct answers is a good result.", "Nothing. Ten questions is too few to say anything about confidence."],
+        why: "Certain should mean nearly always right. Sixty percent is closer to a guess." },
+      { q: "What does calibration mean?",
+        a: ["Your confidence matching how often you are right.", "Always being certain, so that your answers sound authoritative.", "Always hedging, so that you're never caught being wrong.", "Being right more often than other people taking the same test."],
+        why: "A calibrated person can be unsure and still be calibrated, if they're right about as often as they expect." },
+      { q: "Two sources disagree. What is a good way to weigh them?",
+        a: ["Compare their methods, samples, dates and what each actually measured.", "Go with the better-known author, since reputation reflects accuracy.", "Go with the newer source, since later work always corrects earlier work.", "Average their conclusions, since the truth is usually in between."],
+        why: "Disagreements usually trace back to differences you can see in how each study was done." },
+      { q: "What is a preprint?",
+        a: ["A paper shared before peer review: current, useful, read with care.", "A fake or low-quality paper that couldn't get into a real journal.", "A paper that has been peer reviewed but not yet typeset by the journal.", "A paper that was retracted and is kept online only for the record."],
+        why: "Preprints are common in fast-moving fields. They haven't been screened yet." },
+      { q: "A popular column says handwriting beats typing. For which purpose is it strong evidence?",
+        a: ["Showing how the idea circulates among the public and in the press.", "Showing that handwriting really does improve learning for students.", "Showing exactly how the original 2014 study was designed and run.", "Nothing at all. Popular sources are never acceptable as evidence."],
+        why: "Fit for purpose: weak evidence for the effect, good evidence for the belief." }
+    ]
+  },
+
+  /* ───────────────────────────── V ───────────────────────────── */
+  {
+    n: 5, roman: "V", slug: "cite", name: "Cite",
+    bearing: "Leave a trail others can follow.",
+    minutes: 40,
+    reading: `
+<p>Citation is tracing in reverse. In Module 2 you followed other people's trails back to their sources. When you cite, you leave a trail for your reader. That is why citation exists: so a reader can find exactly what you used and check whether it says what you say it does.</p>
+<p>Every element in a citation does a job. The authors and year identify the work. The title confirms it. The journal, volume and pages, or the DOI, take the reader to the exact item. A citation with a wrong element is a trail with a broken step. That is also why you check citation generators against the source itself. They often get a year, a capitalization or an author's name wrong.</p>
+<p>A few rules follow from the purpose:</p>
+<ul>
+<li><strong>Cite ideas, not just words.</strong> A paraphrase still came from somewhere.</li>
+<li><strong>Cite the source, not the tool that found it.</strong> If an AI tool pointed you to an article, read the article and cite it.</li>
+<li><strong>Be honest about secondhand sources.</strong> If you only read about a study in another article, say so.</li>
+<li><strong>Use the style your instructor or field expects.</strong> Styles differ in format, not in purpose.</li>
+</ul>
+<p>Disclosing AI use is the same act. When you say which tool you used, what you used it for and how you checked its output, you make your process traceable. Follow each course's policy; they differ, and the instructor's policy decides.</p>
+<p>Deciding what to hand an AI tool in the first place is part of the same care. Don't paste in other people's personal information, unpublished work that isn't yours to share, or anything your instructor or employer treats as confidential. Many tools keep what you type. Use them for orientation, vocabulary and feedback on your own drafts, and go to the sources themselves for evidence.</p>`,
+    key: [
+      ["Citation", "A trail that lets a reader find and check your source."],
+      ["Element", "One part of a citation: author, year, title, journal, volume, pages, DOI."],
+      ["Secondary citation", "Citing a source you only read about in another source."],
+      ["Disclosure", "Stating which AI tool you used, for what, and how you checked it."]
+    ],
+    exercise: {
+      intro: `<p>Look up the article with DOI <code>10.1016/j.compedu.2012.10.003</code> at <a href="https://doi.org/10.1016/j.compedu.2012.10.003" target="_blank" rel="noopener">doi.org</a> and take its citation elements from the record itself.</p>`,
+      parts: [
+        {
+          id: "elements", type: "fields", graded: true, threshold: 5,
+          prompt: "Fill in the elements as they appear in the article's record.",
+          fields: [
+            { id: "first", label: "First author's family name", accept: ["sana"], normalize: "text", why: "Faria Sana is the first author." },
+            { id: "count", label: "Number of authors", accept: ["3", "three"], normalize: "text", why: "Sana, Weston and Cepeda." },
+            { id: "year", label: "Year", accept: ["2013", "2012"], normalize: "text", why: "The issue is dated 2013. The article appeared online in late 2012, and some indexes use that year. Both are accepted; your citation should match the style's rule." },
+            { id: "journal", label: "Journal", accept: ["computers & education", "computers and education"], normalize: "text", why: "Computers & Education." },
+            { id: "volume", label: "Volume", accept: ["62"], normalize: "text", why: "Volume 62." },
+            { id: "page", label: "First page", accept: ["24"], normalize: "text", why: "Pages 24–31." }
+          ]
+        },
+        {
+          id: "spot", type: "choice", graded: true,
+          prompt: "A citation generator produced this. Compare it with the record for DOI 10.1177/0956797614524581. Which element is wrong?<div class=\"citation-sample\">Mueller, P. A., &amp; Oppenheimer, D. M. (2016). The pen is mightier than the keyboard: Advantages of longhand over laptop note taking. <em>Psychological Science, 25</em>(6), 1159–1168.</div>",
+          options: [
+            { text: "The year", correct: true, why: "The article was published in 2014. A reader searching 2016 would look in the wrong place, and a careful reader would doubt the rest." },
+            { text: "The authors", why: "Mueller and Oppenheimer are correct." },
+            { text: "The journal", why: "Psychological Science is correct." },
+            { text: "The pages", why: "1159–1168 is correct." }
+          ]
+        },
+        {
+          id: "disclose", type: "choice", graded: true,
+          prompt: "Your instructor allows AI with disclosure. You used a chatbot to brainstorm search terms and to check your grammar, and you checked its suggestions yourself. Which disclosure is best?",
+          options: [
+            { text: "“I used [tool name] to brainstorm search terms and to check grammar. I chose the terms and sources myself and reviewed every grammar change.”", correct: true, why: "It names the tool, says what it did and says how you checked. A reader knows exactly what the tool touched." },
+            { text: "“AI was used in this paper.”", why: "Too vague to be useful. It doesn't say which tool or for what." },
+            { text: "No disclosure is needed, since the AI didn't write any of the paper.", why: "The instructor's policy asks for disclosure of use, and you did use it." },
+            { text: "Attach the full chat transcript instead of a statement.", why: "Some instructors ask for transcripts, but a transcript alone doesn't say how you checked the output. Follow the policy, and include a statement." }
+          ]
+        },
+        {
+          id: "paraphrase", type: "choice", graded: true,
+          prompt: "A classmate's draft says:<div class=\"citation-sample\">Urry and colleagues (2021) proved that the way you take notes has no effect on learning.</div>Using the 2021 replication's abstract, which revision is accurate?",
+          options: [
+            { text: "Urry et al. (2021) found typed notes longer and more verbatim, but no reliable quiz difference.", correct: true, why: "It reports what was measured and found, and no more. “No reliable difference” is accurate where “no effect” overclaims." },
+            { text: "Urry et al. (2021) found that note-taking method has no effect on how much students learn.", why: "Still too strong. Not finding a reliable difference in one study isn't proof that there's no effect at all." },
+            { text: "Urry et al. (2021) confirmed that handwriting leads to better learning than typing does.", why: "The replication didn't find that. It's the claim it was testing." },
+            { text: "Urry et al. (2021) showed that typing notes improves learning because students write more.", why: "They found typed notes were longer, not that learning improved." }
+          ]
+        }
+      ]
+    },
+    bank: [
+      { q: "Beyond giving credit, what is the main purpose of a citation?",
+        a: ["Letting readers find your sources and check them for themselves.", "Making the paper look longer and more thoroughly researched.", "Protecting you from grammar and spelling errors in quoted text.", "Showing your instructor that you used enough different sources."],
+        why: "Citation makes your evidence checkable." },
+      { q: "You put an idea from a source entirely in your own words. Do you still cite it?",
+        a: ["Yes. The idea still came from the source, even in new words.", "No. Only direct quotations need citations, not paraphrases.", "Only if the idea includes numbers, statistics or data.", "Only if you kept three or more words from the original."],
+        why: "Attribution covers ideas, not just wording." },
+      { q: "An AI tool pointed you to a journal article. What do you cite?",
+        a: ["The article itself, after you've checked that it exists and says what you need.", "The AI tool, since that's where you actually found the information.", "Both the tool and the article, listed together without checking either.", "Neither, since the tool did the finding and the article is just background."],
+        why: "The tool is a route to the source. The source is what your reader needs." },
+      { q: "Which citation style should you use?",
+        a: ["The one your instructor or your field requires for the assignment.", "APA, since it is the standard style for every academic field.", "Whichever style is shortest, since all styles serve the same purpose.", "MLA, since it is the style most instructors learned in school."],
+        why: "Styles differ by discipline. The purpose is the same." },
+      { q: "A citation generator's output looks odd. What should you do?",
+        a: ["Compare it with the source's own record and fix what's wrong.", "Trust it, since generators pull their data automatically from databases.", "Delete the citation, since an odd-looking one is probably fake.", "Try a different generator and keep whichever version looks better."],
+        why: "Generators are often wrong about years, names and capitalization. The record is the authority." },
+      { q: "You read about Study B only in Article A. How do you cite it honestly?",
+        a: ["Indicate that you found it in Article A, unless you read Study B yourself.", "Cite Study B as if you read it, since Article A summarized it accurately.", "Cite neither, since secondhand information shouldn't be used.", "Cite Article A only, and leave Study B out of your references."],
+        why: "Secondary citation tells the reader whose summary you relied on." },
+      { q: "What does a useful AI disclosure usually include?",
+        a: ["Which tool, what you used it for and how you checked its output.", "The full chat transcript, attached every time, with no other statement.", "Nothing, as long as you edited the AI's output before using it.", "Only the name of the tool, since the method is your own business."],
+        why: "The point is a traceable process. Follow your instructor's specific policy." },
+      { q: "One syllabus bans AI for an assignment; another course allows it. What do you do?",
+        a: ["Follow each course's own policy for that course's assignments.", "Follow the more permissive policy everywhere, since it's the newer one.", "Use AI everywhere but disclose it, since disclosure covers any policy.", "Follow the stricter policy everywhere, to be safe in every course."],
+        why: "Policies differ by course for good reasons. The instructor's policy decides." },
+      { q: "Why does a citation include the year, volume and pages?",
+        a: ["Each one helps a reader narrow down and locate the exact item.", "Tradition. Most of those elements are no longer needed online.", "To show how long the article is and how much work went into it.", "Copyright law requires publishers' details in every citation."],
+        why: "Each element narrows the search until only one item fits." },
+      { q: "What is a DOI in a citation?",
+        a: ["A permanent identifier that leads to the item's record.", "The author's personal ID number, which links to their other work.", "A quality rating that shows the journal has been vetted.", "A license that tells you whether you may reuse the article."],
+        why: "A DOI resolves at doi.org even if the publisher's website changes." }
+    ]
+  },
+
+  /* ───────────────────────────── VI ───────────────────────────── */
+  {
+    n: 6, roman: "VI", slug: "ask", name: "Ask a better question",
+    bearing: "A good question knows what would answer it.",
+    minutes: 45,
+    reading: `
+<p>This module comes last on purpose. A good research question is hard to write before you've seen how answers fail. Now you have: a confident answer resting on an unconfirmed claim, a statistic its source never reported, and a famous result that shrank when others tested it.</p>
+<p>Look at the question the course started with: “Should I take notes by hand or on my laptop?” It sounds simple. It hides several questions. Better for what: remembering facts, understanding concepts, passing next week's quiz, or the final exam? For whom: students in large lectures, or students in small seminars? Compared with what: laptops used only for notes, or laptops with the internet open? And some hidden questions aren't about evidence at all. Whether a professor should ban laptops depends on evidence and also on values, such as how much student choice matters.</p>
+<p>A researchable question names enough of these that you could recognize an answer. What that looks like depends on the kind of question. An experimental question names who, what outcome and compared with what: “Do first-year students who type lecture notes score differently on concept questions than those who write them?” A historical question names a source base, a place and a period: “How did US newspapers describe laptops in lecture halls between 2005 and 2015?” An interpretive question names a text or object and what you want to understand about it: “How do study-skills guides from the 1950s and today describe a good note-taker?” Each is narrow enough to answer and open enough that the answer isn't obvious.</p>
+<p>A simple lookup (“When was the study published?”) usually isn't a research question, though you'll answer many along the way. Use that label with care: some facts that look simple, especially in history, take real investigation to establish.</p>
+<p>Questions should change as you learn. Narrowing a question using what you've found is progress, not failure. The same skill makes you better at prompting AI tools. A request that states the purpose, the scope and the kind of evidence you want gets a better answer, and an answer you can check.</p>`,
+    key: [
+      ["Researchable question", "Specific enough that you'd recognize an answer, open enough to need research."],
+      ["Lookup", "A question with a single findable fact as its answer."],
+      ["Values question", "A question evidence can inform but not settle, because the answer depends on priorities."],
+      ["Scope", "What a question covers: who or what, where and when, and what would count as an answer."]
+    ],
+    exercise: {
+      intro: `<p>Sort these questions about note-taking, then write one of your own on any topic you care about.</p>`,
+      parts: [
+        {
+          id: "sortq", type: "tag", graded: true, threshold: 6,
+          prompt: "What kind of question is each one?",
+          options: ["Researchable", "Too broad", "Simple lookup", "Values question"],
+          items: [
+            { id: "q1", text: "What is the best way to take notes?", key: 1, why: "Best for what, for whom, compared with what? No study could answer it as written." },
+            { id: "q2", text: "In large introductory lectures, do students who type notes score differently on conceptual quiz questions from those who write by hand?", key: 0, why: "It names who, the outcome and the comparison. You'd recognize an answer." },
+            { id: "q3", text: "In what year did Mueller and Oppenheimer publish their note-taking study?", key: 2, why: "One fact answers it: 2014." },
+            { id: "q4", text: "Should professors ban laptops from their classrooms?", key: 3, why: "Evidence about learning matters, but so do values like student choice and accessibility." },
+            { id: "q5", text: "Does technology help students?", key: 1, why: "Which technology, which students, helps with what?" },
+            { id: "q6", text: "Is there a relationship between how much students copy word for word when typing notes and their quiz scores a week later?", key: 0, why: "A specific behavior, a specific outcome and a time frame." },
+            { id: "q7", text: "How did US newspapers describe laptops in lecture halls between 2005 and 2015?", key: 0, why: "A historical question: a source base, a place and a period. You'd recognize an answer in the newspapers themselves." }
+          ]
+        },
+        {
+          id: "bearing", type: "write", graded: true,
+          prompt: "Take a bearing of your own, on any topic you care about. Draft a question, check it against the list, then revise it. Your revised question will appear on your certificate.",
+          fields: [
+            { id: "draft", label: "First draft", min: 15, rows: 2, placeholder: "Whatever comes to mind first" },
+            { id: "question", label: "Revised question", min: 40, rows: 3, placeholder: "Experimental, historical or interpretive: the reading has an example of each" },
+            { id: "changed", label: "What you changed, and why", min: 20, rows: 2 },
+            { id: "evidence", label: "What kind of evidence would answer it?", min: 30, rows: 2, placeholder: "For example: experiments comparing…, newspapers from…, letters by…" },
+            { id: "change", label: "What finding would change your mind, or surprise you?", min: 20, rows: 2, placeholder: "If I found that…" }
+          ],
+          checks: ["I could recognize an answer if I found one.", "A single lookup wouldn't settle it.", "It says who or what, and where or when.", "The answer isn't obvious before I start."],
+          checksLabel: "Check your revised question",
+          doneMsg: "Recorded. Your revised question will appear on your certificate."
+        }
+      ]
+    },
+    bank: [
+      { q: "What's the main problem with the question “Is social media bad?”",
+        a: ["It's too broad. It needs a who, an outcome and a comparison.", "It's a simple lookup that one statistic could answer.", "It's been studied so much that there's nothing left to find.", "It's too narrow to research, since it names only one technology."],
+        why: "Bad for whom, in what way, compared with what? Each answer narrows it into something researchable." },
+      { q: "Your research changes your mind about your original question. What should you do?",
+        a: ["Revise the question. That's a normal part of research.", "Keep the original question and leave the new findings out.", "Start over on a completely different topic, since this one failed.", "Ignore the findings that changed your mind, since they may be flukes."],
+        why: "Questions are supposed to sharpen as you learn." },
+      { q: "You know almost nothing about a topic yet. What's a good start?",
+        a: ["Background reading, such as a review, to get oriented first.", "Go straight to specialist databases with a very narrow search.", "Write your conclusion first, then look for sources that support it.", "Pick the first narrow question that comes to mind and commit to it."],
+        why: "You can't narrow well until you know the landscape. AI tools can help with orientation too, if you check what they tell you." },
+      { q: "Which of these is a researchable question?",
+        a: ["Do commuters who live farther away attend less?", "Is college really worth it for most students today?", "When was the university founded, and by whom?", "Should tuition at public universities be free?"],
+        why: "It names a population, a factor and an outcome you could measure." },
+      { q: "“Should campuses ban laptops?” What kind of question is this?",
+        a: ["Evidence can inform it, but the answer also depends on values.", "A simple lookup, since campuses publish their laptop policies.", "A purely factual question that one good study could settle.", "A question with no relevant evidence, since it's about policy."],
+        why: "Policy questions mix evidence with priorities. Research can inform both sides of the tradeoff." },
+      { q: "Which request to an AI tool is most likely to get a useful, checkable answer?",
+        a: ["One that states your purpose and scope and asks for sources.", "A single keyword, so the tool isn't distracted by extra detail.", "One that asks the tool to sound confident and avoid hedging.", "One that asks for the answer without sources, to save time."],
+        why: "Prompting is question-writing. A precise question with a request for checkable evidence gets a better answer." },
+      { q: "Your topic is too big. How do you narrow it?",
+        a: ["Use what you've found to pick a population, place or outcome.", "Pick a random subtopic and switch to it without further reading.", "Keep the topic but limit yourself to fewer sources about it.", "Ask a broader question instead, so more sources will fit."],
+        why: "What you've read shows you which narrower questions are live." },
+      { q: "“When was the study published?” What kind of question is this?",
+        a: ["A lookup, since a single findable fact answers it.", "A research question that needs a study design to answer.", "A values question, since the answer depends on priorities.", "A question too broad to answer without narrowing first."],
+        why: "Lookups are useful along the way, but they don't need a research design." },
+      { q: "Where are good places to find open questions in a field?",
+        a: ["Limitations sections of recent studies, and recent reviews.", "Article titles, since they state each paper's main question.", "Abstracts of the oldest studies, since they set the field's agenda.", "A list of the most-cited papers ever published in the field."],
+        why: "Researchers say what is still unknown at the end of their papers." },
+      { q: "Your question turns out to be several questions at once. What do you do?",
+        a: ["Split it into parts and decide which to answer first.", "Answer all the parts at once, since they belong to one topic.", "Drop the hardest part quietly and answer the rest.", "Keep it as one question, since broad questions sound more ambitious."],
+        why: "Separate questions often need separate kinds of evidence." }
+    ]
+  }
+];
+
+const CONFIDENCE = [
+  { id: "guess", label: "Unsure", p: 0.5, means: "it could go either way" },
+  { id: "fair", label: "Fairly sure", p: 0.75, means: "you'd expect to be right about three times in four" },
+  { id: "certain", label: "Certain", p: 0.95, means: "you'd be surprised to be wrong" }
+];
+/* Pass rule: at least 5 of 6 correct, no wrong answer marked Certain, and a confidence score of at least 20.
+   Confidence score = 100 × (1 − Brier / 0.25), floored at 0: answering everything at 50% scores 0. */
+const MASTERY = { draw: 6, needCorrect: 5, minScore: 20 };
+
+/* Further reading. All open access; checked in OpenAlex 6 Nov 2026. */
+const READINGS = [
+  { modules: [1], cite: "Lo, L. S. (2025). The CARE approach for academic librarians: From search first to answer first with generative AI. <em>Journal of Academic Librarianship</em>.",
+    note: "The argument this course starts from. Research now often begins with an AI answer rather than a list of sources, so the first skill is reading that answer critically. Lo proposes four steps for doing it: Classify, Assess, Review, Enhance. Written for librarians, but readable by anyone.",
+    open: "https://libraopen.lib.virginia.edu/public_view/jw827b87k", openLabel: "Open copy (University of Virginia)", doi: "10.1016/j.acalib.2025.103186" },
+  { modules: [2], cite: "Wineburg, S., & McGrew, S. (2019). Lateral reading and the nature of expertise: Reading less and learning more when evaluating digital information. <em>Teachers College Record</em>, 121(11).",
+    note: "Professional fact-checkers, historians and Stanford undergraduates evaluated unfamiliar websites. The fact-checkers did best, by leaving a site to see what others said about it instead of reading it closely.",
+    open: "https://purl.stanford.edu/yk133ht8603", openLabel: "Open copy (Stanford)", doi: "10.1177/016146811912101102" },
+  { modules: [2, 5], cite: "Mogull, S. A. (2017). Accuracy of cited “facts” in medical research articles: A review of study methodology and recalculation of quotation error rate. <em>PLOS ONE</em>, 12(9), e0184727.",
+    note: "Misrepresented citations aren't only an AI problem. This review estimates that about one in seven cited claims in medical research articles is inaccurate, and most of those are major errors: the source doesn't support the claim, is unrelated to it, or contradicts it.",
+    open: "https://doi.org/10.1371/journal.pone.0184727", openLabel: "Read at PLOS ONE", doi: "10.1371/journal.pone.0184727" },
+  { modules: [1, 2], cite: "Magesh, V., Surani, F., Dahl, M., Suzgun, M., Manning, C. D., & Ho, D. E. (2025). Hallucination-free? Assessing the reliability of leading AI legal research tools. <em>Journal of Empirical Legal Studies</em>, 22(2), 216–242.",
+    note: "Vendors claimed their legal research tools, which retrieve real sources before answering, were free of hallucinations. A preregistered test found the leading tools still gave hallucinated answers 17 to 33 percent of the time. Grounding in real sources reduces errors; it doesn't remove the need to check.",
+    open: "https://doi.org/10.1111/jels.12413", openLabel: "Read at the journal", doi: "10.1111/jels.12413" },
+  { modules: [3, 4], cite: "Open Science Collaboration. (2015). Estimating the reproducibility of psychological science. <em>Science</em>, 349(6251), aac4716.",
+    note: "The note-taking story at scale. Researchers repeated 100 published psychology studies. Nearly all the originals reported significant results; about a third of the repeats did, and effects were on average half as large. A single study is a starting point, not a verdict.",
+    open: "https://research.tilburguniversity.edu/en/publications/4b1e6c37-3ee2-414b-b790-66024d631d4a", openLabel: "Open copy (Tilburg University)", doi: "10.1126/science.aac4716" },
+  { modules: [1, 6], also: true, cite: "Lo, L. S. (2025). AI literacy: A guide for academic libraries. <em>College &amp; Research Libraries News</em>, 86(3), 120.",
+    note: "A shorter, broader overview of what AI literacy involves, from the same author as the CARE approach.",
+    open: "https://doi.org/10.5860/crln.86.3.120", openLabel: "Read at C&amp;RL News", doi: "10.5860/crln.86.3.120" }
+];
+
+
+/* Final step: return to the original answer. */
+const FINAL = {
+  name: "Return to the answer",
+  bearing: "Finish what the course started.",
+  minutes: 40,
+  intro: `<p>The course began with a confident answer to “Should I take notes by hand or on my laptop?” You now know which of its claims hold. Write the answer you'd give instead.</p>
+<p>Use any sources you've read, in the course or beyond it. You don't have to agree with anyone, including this course. You need an answer your sources support, at the confidence they support.</p>`,
+  fields: [
+    { id: "answer", label: "Your revised answer", min: 250, rows: 8, placeholder: "Two short paragraphs is plenty. Say how sure you are, and why." },
+    { id: "src1", label: "Source 1: citation", min: 40, rows: 2 },
+    { id: "src1what", label: "What source 1 shows, in your own words", min: 30, rows: 2 },
+    { id: "src2", label: "Source 2: citation", min: 40, rows: 2 },
+    { id: "src2what", label: "What source 2 shows, in your own words", min: 30, rows: 2 },
+    { id: "limit", label: "One limitation of the evidence", min: 30, rows: 2 },
+    { id: "open", label: "What remains unresolved", min: 30, rows: 2 }
+  ],
+  checksLabel: "Review your answer before you finish",
+  checks: [
+    "Every factual claim in my answer is backed by one of my sources, or marked as uncertain.",
+    "I read each source myself, at least its abstract, not a summary of it.",
+    "My answer claims no more than my sources show.",
+    "I said how sure I am, and why.",
+    "A reader could find each source from my citations."
+  ],
+  model: `<p>Neither method is clearly better for everyone, but handwriting may have a small edge. A 2014 experiment found that students who typed lecture notes did worse on conceptual questions than students who wrote by hand (Mueller &amp; Oppenheimer, 2014). Two later replications did not find a reliable difference (Morehead et al., 2019; Urry et al., 2021). A 2024 meta-analysis of 24 studies found a small advantage for taking and reviewing handwritten notes, although typing produced far more notes (Flanigan et al., 2024).</p>
+<p>I'm fairly sure about one practical point: using a laptop for other things during class lowered test scores for the user and for students who could see the screen (Sana et al., 2013). So if you type, close everything else. Limitation: the studies I read mostly tested short lectures followed by quizzes, not learning across a whole course. Unresolved: whether the small handwriting advantage holds in real courses and over a semester.</p>`
+};
+
+</script>
+<script>
+(function () {
+"use strict";
+
+/* ───────────── utilities ───────────── */
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const fmtDate = iso => { const d = new Date(iso); return isNaN(d) ? "" : `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`; };
+const shuffle = arr => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const norm = (v, how) => {
+  let s = String(v || "").trim().toLowerCase();
+  if (how === "doi") s = s.replace(/^https?:\/\/(dx\.)?doi\.org\//, "").replace(/^doi:\s*/, "").replace(/\s+/g, "");
+  else s = s.replace(/\s+/g, " ").replace(/[.]$/, "");
+  return s;
+};
+const plateBy = n => PLATES.find(p => p.n === n);
+const T = window.THEME || {};
+const U = T.unit || "Plate", u = U.toLowerCase(), Us = U + "s";
+const N = p => T.arabic ? String(p.n) : p.roman;
+const TOTAL = T.arabic ? "6" : "VI";
+const CREDIT = T.credit || "Compiled by Alfred Wallace";
+const figCap = (p, k, name) => T.arabic ? name : `${U} ${N(p)} · Fig. ${k} · ${name}`;
+
+/* ───────────── state (this browser only) ───────────── */
+const KEY = "bearings.v1";
+const blank = () => ({ v: 1, plates: {}, name: "", started: new Date().toISOString() });
+let S = blank();
+let storageOK = true;
+try { const raw = localStorage.getItem(KEY); if (raw) { const parsed = JSON.parse(raw); if (parsed && parsed.v === 1) S = parsed; } }
+catch (e) { storageOK = false; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); storageOK = true; } catch (e) { storageOK = false; } }
+function P(n) {
+  if (!S.plates[n]) S.plates[n] = { ex: { parts: {}, passed: false }, mastery: { attempts: [], passedAt: null }, seen: {} };
+  return S.plates[n];
+}
+const exPassed = n => !!P(n).ex.passed;
+const mPassed = n => !!P(n).mastery.passedAt;
+const mastered = n => exPassed(n) && mPassed(n);
+const masteredAt = n => {
+  if (!mastered(n)) return null;
+  const a = P(n).ex.passedAt, b = P(n).mastery.passedAt;
+  return (a && b) ? (a > b ? a : b) : (a || b);
+};
+const allMastered = () => PLATES.every(p => mastered(p.n));
+const F = () => S.final || (S.final = { val: {}, done: false, at: null });
+const finalDone = () => !!(S.final && S.final.done);
+const courseDone = () => allMastered() && finalDone();
+const confScore = brier => brier == null ? null : Math.max(0, Math.round(100 * (1 - brier / 0.25)));
+const pOf = id => (CONFIDENCE.find(c => c.id === id) || CONFIDENCE[0]).p;
+const setBrier = items => items.reduce((t, r) => t + Math.pow(pOf(r.conf) - (r.ok ? 1 : 0), 2), 0) / items.length;
+function status(n) {
+  if (mastered(n)) return { cls: "ok", text: "Mastered" };
+  const p = S.plates[n];
+  if (!p) return { cls: "", text: "Not started" };
+  const bits = [];
+  if (exPassed(n)) bits.push("Exercise done");
+  if (mPassed(n)) bits.push("Check passed");
+  if (bits.length) return { cls: "part", text: bits.join(" · ") };
+  if (p.mastery.attempts.length || Object.keys(p.ex.parts).length) return { cls: "part", text: "In progress" };
+  return { cls: "", text: "Not started" };
+}
+
+/* all mastery responses, for calibration */
+function allResponses() {
+  const out = [];
+  PLATES.forEach(p => { const st = S.plates[p.n]; if (!st) return; st.mastery.attempts.forEach(a => a.items.forEach(it => out.push(it))); });
+  return out;
+}
+function calib() {
+  const every = allResponses();
+  const rs = every.filter(r => r.first !== false);
+  const levels = CONFIDENCE.map(c => {
+    const at = rs.filter(r => r.conf === c.id);
+    const right = at.filter(r => r.ok).length;
+    return { ...c, n: at.length, right, rate: at.length ? right / at.length : null };
+  });
+  const n = rs.length;
+  const right = rs.filter(r => r.ok).length;
+  const brier = n ? rs.reduce((s, r) => s + Math.pow(pOf(r.conf) - (r.ok ? 1 : 0), 2), 0) / n : null;
+  const meanConf = n ? rs.reduce((s, r) => s + pOf(r.conf), 0) / n : null;
+  return { n, all: every.length, right, acc: n ? right / n : null, brier, score: confScore(brier), meanConf, gap: n ? meanConf - right / n : null, levels };
+}
+
+/* ───────────── shared pieces ───────────── */
+const station = (size = 22) => T.noMark ? "" : `<svg width="${size}" height="${Math.round(size * 0.92)}" viewBox="0 0 26 24" aria-hidden="true"><polygon points="13,2 24,22 2,22" fill="none" stroke="var(--ink)" stroke-width="2"/><circle cx="13" cy="15.3" r="3" fill="var(--signal)"/></svg>`;
+const chip = st => `<span class="chip ${st.cls}">${esc(st.text)}</span>`;
+
+function renderScalebar(current) {
+  const bar = $("#scalebar");
+  bar.innerHTML = PLATES.map(p => {
+    const cls = p.n === current ? "here" : (mastered(p.n) ? "done" : "");
+    return `<a href="#${u}-${p.n}" class="${cls}" title="${U} ${N(p)}: ${esc(p.name)}${mastered(p.n) ? " (mastered)" : ""}" ${p.n === current ? 'aria-current="page"' : ""}>${N(p)}</a>`;
+  }).join("");
+  $$(".nav a").forEach(a => a.removeAttribute("aria-current"));
+}
+
+/* ───────────── views ───────────── */
+function viewKey() {
+  const done = PLATES.filter(p => mastered(p.n)).length;
+  const resume = PLATES.find(p => !mastered(p.n));
+  const cta = resume ? { href: `#${u}-${resume.n}`, text: `${done ? "Continue" : "Start"} with ${U} ${N(resume)}` }
+    : !finalDone() ? { href: "#final", text: "Continue with the final step" } : { href: "#certificate", text: "Get your certificate" };
+  const cover = T.arabic ? `
+<section class="hero" aria-label="Course">
+  <h1>Bearings</h1>
+  <p class="sub">A short, self-paced course in research and AI literacy. Six modules for getting from a confident answer to evidence you can stand on—about five hours in all, with a certificate at the end.</p>
+  <div class="btn-row"><a class="btn-link" href="${cta.href}">${cta.text}</a><span class="status-line">${done} of 6 mastered</span></div>
+</section>` : `
+<section class="neatline" aria-label="Cover">
+  <div class="neat-inner">
+    <div class="cartouche">
+      <span class="label">A short course in research and AI literacy</span>
+      <h1>Bearings</h1>
+      <p class="sub">Six plates for finding your way from a confident answer to evidence you can stand on.</p>
+      <div class="short-rule"></div>
+      <div class="credit">${station(22)}<span class="label">${CREDIT}</span></div>
+    </div>
+    <div class="field"><canvas id="contours" aria-hidden="true"></canvas><span class="label field-cap">Key</span></div>
+  </div>
+</section>`;
+  return `${cover}
+
+<section class="section">
+  <div class="section-head"><h2>How the course works</h2></div>
+  <div class="prose">
+    <p>We like to imagine that research is a string of successes. But a lot of what a researcher knows was learned by being wrong in a useful way: a search that found nothing, a source that didn't say what was claimed, a certainty that didn't hold. <em>Bearings</em> is built around those moments—each ${u} is one move a researcher makes.</p>
+  </div>
+  <div class="how">
+    <div><span class="label">Reading</span><p>A short account of the move, with a key to its terms.</p></div>
+    <div><span class="label">Field exercise</span><p>Work with real sources and real search tools. Your answers are checked against what the sources actually say.</p></div>
+    <div><span class="label">Mastery check</span><p>Six questions drawn from a larger set, each with how sure you are. Retake as often as you like; each set differs.</p></div>
+    <div><span class="label">Certificate</span><p>Master all six ${u}s, write a revised answer to the opening question, and you can save a certificate.</p></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2>The running case: Should I take notes by hand or on my laptop?</h2></div>
+  <div class="prose">
+    <p>You will carry one question through the whole course. It begins with a confident AI-style answer. By the end you will know which of its claims hold, which collapse, and what a better question would look like. The question is ordinary on purpose. The moves are the same for any topic.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head" style="flex-direction:row;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px">
+    <h2>${Us}</h2>
+    <span class="status-line">${done} of 6 mastered · <a href="${cta.href}">${cta.text} →</a></span>
+  </div>
+  <nav class="index" aria-label="All ${u}s">
+    ${PLATES.map(p => `<a href="#${u}-${p.n}"><span class="num">${N(p)}</span><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span class="nm">${esc(p.name)}</span><span class="br">${esc(p.bearing)} · about ${p.minutes} minutes</span></span>${chip(status(p.n))}</a>`).join("")}
+    <a href="#final"><span class="num num-final">Final</span><span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span class="nm">${esc(FINAL.name)}</span><span class="br">${esc(FINAL.bearing)} · about ${FINAL.minutes} minutes</span></span>${chip(finalDone() ? { cls: "ok", text: "Done" } : (Object.keys(F().val).length ? { cls: "part", text: "In progress" } : { cls: "", text: "Not started" }))}</a>
+  </nav>
+  <p class="note">Bearings keeps no records on any server. Your progress lives only in this browser${storageOK ? "" : " (and this browser is not letting the page save it, so copy your progress code from the Progress page before leaving)"}. To move to another device, copy your progress code from the <a href="#record">Progress</a> page.</p>
+  <p class="note">Want to go deeper? See <a href="#reading">Further reading</a>.</p>
+</section>`;
+}
+
+function viewPlate(n) {
+  const p = plateBy(n);
+  const st = P(n);
+  const prev = plateBy(n - 1), next = plateBy(n + 1);
+  return `
+<header class="plate-head">
+  <div class="plate-meta"><span class="status-line">${U} ${N(p)} of ${TOTAL} · About ${p.minutes} minutes</span>${chip(status(n))}</div>
+  <h1>${esc(p.name)}</h1>
+  <p class="bearing">${esc(p.bearing)}</p>
+  <nav class="jump" aria-label="On this page"><button type="button" data-jump="reading-text">Reading</button><button type="button" data-jump="exercise">Field exercise</button><button type="button" data-jump="mastery">Mastery check</button></nav>
+</header>
+
+<div class="two-col" id="reading-text">
+  <div class="prose">${p.reading}</div>
+  <aside class="legend" aria-label="Key terms">
+    <div class="legend-title">${T.arabic ? "Key terms" : "Key · " + U + " " + N(p)}</div>
+    <dl>${p.key.map((k, i) => `<div class="row"><span class="sw" style="background:${["var(--slate)", "var(--green)", "var(--sepia)", "var(--rule)", "var(--ink-muted)"][i % 5]}"></span><div><dt>${esc(k[0])}</dt><dd>${esc(k[1])}</dd></div></div>`).join("")}</dl>
+  </aside>
+</div>
+
+<section class="fig" id="exercise" aria-label="Field exercise">
+  <div class="fig-cap"><span class="label">${figCap(p, 1, "Field exercise")}</span><span id="ex-status">${exPassed(n) ? chip({ cls: "ok", text: "Complete" }) : ""}</span></div>
+  <div class="fig-body">
+    <div class="intro">${p.exercise.intro}</div>
+    ${n <= 2 ? caseAnswerBlock(n) : ""}
+    ${p.exercise.parts.map(part => renderPart(n, part)).join("")}
+    <div class="btn-row"><button class="btn" id="ex-check" type="button">Check my work</button><span class="status-line" id="ex-msg" role="status">Your answers save in this browser as you go.</span></div>
+  </div>
+</section>
+
+<section class="fig" id="mastery" aria-label="Mastery check">
+  <div class="fig-cap"><span class="label">${figCap(p, 2, "Mastery check")}</span><span id="m-status">${mPassed(n) ? chip({ cls: "ok", text: "Passed " + fmtDate(st.mastery.passedAt) }) : ""}</span></div>
+  <div class="fig-body" id="m-body"></div>
+</section>
+
+<nav class="plate-nav" aria-label="${U} navigation">
+  ${prev ? `<a href="#${u}-${prev.n}"><span class="label">← ${U} ${N(prev)}</span><span class="nm">${esc(prev.name)}</span></a>` : `<a href="#key"><span class="label">← Overview</span><span class="nm">Course overview</span></a>`}
+  ${next ? `<a class="next" href="#${u}-${next.n}"><span class="label">${U} ${N(next)} →</span><span class="nm">${esc(next.name)}</span></a>` : `<a class="next" href="#final"><span class="label">Final step →</span><span class="nm">${esc(FINAL.name)}</span></a>`}
+</nav>`;
+}
+
+function caseAnswerBlock(n) {
+  const withCites = n === 2;
+  return `<div class="answer-block" aria-label="Composed AI answer">
+    <span class="q">Asked: “Should I take notes by hand or on my laptop?”</span>
+    <p>${CASE_ANSWER.map(s => esc(s.text) + (withCites && s.cite ? `<sup>[${s.cite}]</sup>` : "")).join(" ")}</p>
+    <span class="label">Composed for this course to imitate a chatbot answer</span>
+  </div>`;
+}
+
+/* ───────────── exercise parts ───────────── */
+function renderPart(n, part) {
+  const saved = (P(n).ex.parts[part.id] || {}).val || {};
+  const pid = `p${n}-${part.id}`;
+  const head = `<div class="part-prompt" id="${pid}-prompt">${part.prompt}</div>`;
+  if (part.type === "tag") {
+    return `<div class="part" data-part="${part.id}">${head}<div class="items">${part.items.map(it => `
+      <div class="item" data-item="${it.id}">
+        <div class="item-text" id="${pid}-${it.id}-t">${it.text}</div>
+        <fieldset class="seg" aria-labelledby="${pid}-${it.id}-t" aria-describedby="${pid}-prompt">${part.options.map((o, oi) => `<label><input type="radio" name="${pid}-${it.id}" id="${pid}-${it.id}-${oi}" value="${oi}" ${String(saved[it.id]) === String(oi) ? "checked" : ""}>${esc(o)}</label>`).join("")}</fieldset>
+        <div class="fb-slot"></div>
+      </div>`).join("")}</div><div class="fb-slot"></div></div>`;
+  }
+  if (part.type === "choice") {
+    const order = part._order || (part._order = shuffle(part.options.map((_, i) => i)));
+    return `<div class="part" data-part="${part.id}">${head}<fieldset class="opts" aria-labelledby="${pid}-prompt">${order.map(i => `<label><input type="radio" name="${pid}" id="${pid}-${i}" value="${i}" ${String(saved.choice) === String(i) ? "checked" : ""}><span>${part.options[i].text}</span></label>`).join("")}</fieldset><div class="fb-slot"></div></div>`;
+  }
+  if (part.type === "fields") {
+    return `<div class="part" data-part="${part.id}">${head}<div class="fields">${part.fields.map(f => `
+      <div class="fieldset"><label for="${pid}-${f.id}">${esc(f.label)}</label><input type="text" id="${pid}-${f.id}" data-field="${f.id}" placeholder="${esc(f.placeholder || "")}" value="${esc(saved[f.id] || "")}" autocomplete="off" spellcheck="false"></div>`).join("")}</div><div class="fb-slot"></div></div>`;
+  }
+  if (part.type === "predict") {
+    return `<div class="part" data-part="${part.id}">${head}<div class="items">${part.items.map(it => `
+      <div class="item" data-item="${it.id}">
+        <div class="item-text" id="${pid}-${it.id}-t">${esc(it.label)}</div>
+        <fieldset class="seg" aria-describedby="${pid}-${it.id}-t"><legend class="label">My prediction</legend>${part.choices.map((c, ci) => `<label><input type="radio" name="${pid}-${it.id}-pre" id="${pid}-${it.id}-pre-${ci}" value="${esc(c)}" ${(saved[it.id + "_pre"] === c) ? "checked" : ""}>${esc(c)}</label>`).join("")}</fieldset>
+        <fieldset class="seg" aria-describedby="${pid}-${it.id}-t"><legend class="label">What happened</legend>${["Yes", "No", "Didn't try"].map((c, ci) => `<label><input type="radio" name="${pid}-${it.id}-post" id="${pid}-${it.id}-post-${ci}" value="${esc(c)}" ${(saved[it.id + "_post"] === c) ? "checked" : ""}>${esc(c)}</label>`).join("")}</fieldset>
+      </div>`).join("")}</div><div class="fb-slot"></div></div>`;
+  }
+  if (part.type === "write") {
+    return `<div class="part" data-part="${part.id}">${head}<div style="display:flex;flex-direction:column;gap:12px;max-width:var(--measure)">${part.fields.map(f => `
+      <div class="fieldset"><label for="${pid}-${f.id}">${esc(f.label)}</label><textarea id="${pid}-${f.id}" data-field="${f.id}" rows="${f.rows || 2}" placeholder="${esc(f.placeholder || "")}">${esc(saved[f.id] || "")}</textarea>${f.min ? `<span class="hint">At least ${f.min} characters.</span>` : ""}</div>`).join("")}</div>${checksHTML(pid, part, saved)}<div class="fb-slot"></div></div>`;
+  }
+  return "";
+}
+
+function checksHTML(pid, part, saved) {
+  if (!part.checks) return "";
+  return `<fieldset class="checks"><legend>${esc(part.checksLabel || "Check your work")}</legend>${part.checks.map((c, i) => `<label><input type="checkbox" id="${pid}-chk${i}" data-check="${i}" ${saved["check_" + i] ? "checked" : ""}><span>${esc(c)}</span></label>`).join("")}</fieldset>`;
+}
+function readChecks(root, val) { $$("[data-check]", root).forEach(el => { val["check_" + el.dataset.check] = el.checked; }); }
+
+function readPart(n, part) {
+  const root = $(`[data-part="${part.id}"]`);
+  const pid = `p${n}-${part.id}`;
+  const val = {};
+  if (!root) return val;
+  if (part.type === "tag") part.items.forEach(it => { const c = $(`input[name="${pid}-${it.id}"]:checked`, root); if (c) val[it.id] = c.value; });
+  if (part.type === "choice") { const c = $(`input[name="${pid}"]:checked`, root); if (c) val.choice = c.value; }
+  if (part.type === "fields" || part.type === "write") { $$("[data-field]", root).forEach(el => { val[el.dataset.field] = el.value; }); readChecks(root, val); }
+  if (part.type === "predict") part.items.forEach(it => {
+    const a = $(`input[name="${pid}-${it.id}-pre"]:checked`, root), b = $(`input[name="${pid}-${it.id}-post"]:checked`, root);
+    if (a) val[it.id + "_pre"] = a.value; if (b) val[it.id + "_post"] = b.value;
+  });
+  return val;
+}
+
+function gradePart(n, part, val) {
+  const root = $(`[data-part="${part.id}"]`);
+  const slot = root.querySelector(":scope > .fb-slot");
+  if (part.type === "tag") {
+    let right = 0, missing = 0;
+    part.items.forEach(it => {
+      const box = $(`[data-item="${it.id}"]`, root);
+      const s = $(".fb-slot", box);
+      box.classList.remove("right", "wrong");
+      if (val[it.id] == null) { missing++; s.innerHTML = ""; return; }
+      const ok = Number(val[it.id]) === it.key;
+      if (ok) right++;
+      box.classList.add(ok ? "right" : "wrong");
+      s.innerHTML = `<div class="fb ${ok ? "right" : "wrong"}"><strong>${ok ? "Yes" : "Not quite"}</strong>${ok ? "" : `The better answer is “${esc(part.options[it.key])}.” `}${it.why}</div>`;
+    });
+    const need = part.threshold || part.items.length;
+    const pass = !missing && right >= need;
+    slot.innerHTML = missing ? `<div class="fb">Answer all ${part.items.length} to finish this part.</div>` : `<div class="fb ${pass ? "right" : "wrong"}"><strong>${right} of ${part.items.length}</strong>${pass ? "That clears this part." : `You need ${need} to clear this part. Read the notes above and try again.`}</div>`;
+    return pass;
+  }
+  if (part.type === "choice") {
+    $$("label", root).forEach(l => l.classList.remove("is-key"));
+    if (val.choice == null) { slot.innerHTML = `<div class="fb">Choose an answer.</div>`; return false; }
+    const opt = part.options[Number(val.choice)];
+    const ok = !!opt.correct;
+    if (ok) { const keyIdx = part.options.findIndex(o => o.correct); const inp = $(`input[value="${keyIdx}"]`, root); if (inp) inp.closest("label").classList.add("is-key"); }
+    slot.innerHTML = `<div class="fb ${ok ? "right" : "wrong"}"><strong>${ok ? "Yes" : "Not quite"}</strong>${opt.why}</div>`;
+    return ok;
+  }
+  if (part.type === "fields") {
+    let right = 0, empty = 0; const notes = [];
+    part.fields.forEach(f => {
+      const el = $(`[data-field="${f.id}"]`, root);
+      el.classList.remove("right", "wrong");
+      const v = norm(val[f.id], f.normalize);
+      if (!v) { empty++; return; }
+      const ok = f.accept.some(a => norm(a, f.normalize) === v);
+      el.classList.add(ok ? "right" : "wrong");
+      if (ok) right++;
+      if (ok && f.why && part.fields.length === 1) notes.push(f.why);
+      if (!ok) notes.push(`<em>${esc(f.label)}:</em> check this against the record.`);
+      if (ok && f.id === "year" && v === "2012") notes.push(f.why);
+    });
+    const need = part.threshold || part.fields.length;
+    const pass = !empty && right >= need;
+    slot.innerHTML = empty ? `<div class="fb">Fill in every box to finish this part.</div>` :
+      `<div class="fb ${pass ? "right" : "wrong"}"><strong>${right} of ${part.fields.length}</strong>${notes.join(" ")}</div>`;
+    return pass;
+  }
+  if (part.type === "predict") {
+    const complete = part.items.every(it => val[it.id + "_pre"] && val[it.id + "_post"]);
+    if (!complete) { slot.innerHTML = `<div class="fb">Record a prediction and a result for each line. There are no wrong predictions; this part counts when it's filled in.</div>`; return false; }
+    const tried = part.items.filter(it => val[it.id + "_post"] !== "Didn't try");
+    const skipped = part.items.length - tried.length;
+    const firm = tried.filter(it => val[it.id + "_pre"] !== "Not sure");
+    const surprises = firm.filter(it => val[it.id + "_pre"] !== val[it.id + "_post"]).length;
+    const unsure = tried.length - firm.length;
+    const bits = [];
+    if (!tried.length) bits.push("You didn't run any of the searches, so there's nothing to compare yet. They're worth trying when you can: the gap between a prediction and a result is where you learn how a tool works.");
+    else {
+      if (surprises) bits.push(`${surprises} of the searches you ran came out differently from your prediction. Those are the places a tool works differently from how you pictured it.`);
+      else if (firm.length) bits.push(`Your predictions matched the ${firm.length === 1 ? "search" : "searches"} you ran.`);
+      if (unsure) bits.push(`You weren't sure about ${unsure} of the searches you ran; now you've seen what happens.`);
+      if (skipped) bits.push(`You skipped ${skipped}, so what ${skipped === 1 ? "that tool does" : "those tools do"} is still an open question.`);
+    }
+    slot.innerHTML = `<div class="fb right"><strong>Recorded</strong>${bits.join(" ")}</div>`;
+    return true;
+  }
+  if (part.type === "write") {
+    if (part.optional) {
+      const any = part.fields.some(f => (val[f.id] || "").trim());
+      slot.innerHTML = any ? `<div class="fb right"><strong>Recorded</strong>${esc(part.doneMsg || "")}</div>` : "";
+      return true;
+    }
+    const short = part.fields.filter(f => (val[f.id] || "").trim().length < f.min);
+    const unchecked = (part.checks || []).filter((_, i) => !val["check_" + i]).length;
+    const bits = [];
+    if (short.length) bits.push(`Add a bit more detail to: ${short.map(f => esc(f.label)).join("; ")}.`);
+    if (unchecked) bits.push(`Tick each item in the checklist once it's true of your work.`);
+    slot.innerHTML = bits.length ? `<div class="fb wrong"><strong>A little more</strong>${bits.join(" ")}</div>` : `<div class="fb right"><strong>Recorded</strong>${esc(part.doneMsg || "Recorded.")}</div>`;
+    $$("textarea", root).forEach(t => t.classList.toggle("right", !short.find(f => f.id === t.dataset.field)));
+    return !bits.length;
+  }
+  return true;
+}
+
+function checkExercise(n) {
+  const p = plateBy(n); const st = P(n);
+  let allPass = true;
+  p.exercise.parts.forEach(part => {
+    const val = readPart(n, part);
+    const pass = gradePart(n, part, val);
+    st.ex.parts[part.id] = { val, pass };
+    if (!pass && !part.optional) allPass = false;
+  });
+  const was = st.ex.passed;
+  st.ex.passed = allPass;
+  if (allPass && !st.ex.passedAt) st.ex.passedAt = new Date().toISOString();
+  if (!allPass && !was) st.ex.passedAt = st.ex.passedAt || null;
+  if (was) st.ex.passed = true; // once complete, stays complete
+  save();
+  $("#ex-msg").textContent = st.ex.passed ? (mPassed(n) ? `Exercise complete. This ${u} is mastered.` : "Exercise complete. Now take the mastery check.") : "Not complete yet. The notes above show what to revisit.";
+  $("#ex-status").innerHTML = st.ex.passed ? chip({ cls: "ok", text: "Complete" }) : "";
+  renderScalebar(n);
+}
+
+let saveTimer = null;
+function autosaveExercise(n, target) {
+  const box = target.closest("[data-part]"); if (!box || !box.closest("#exercise")) return;
+  const part = plateBy(n).exercise.parts.find(q => q.id === box.dataset.part); if (!part) return;
+  const st = P(n); const prev = st.ex.parts[part.id] || {};
+  st.ex.parts[part.id] = { val: readPart(n, part), pass: !!prev.pass };
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { save(); const m = $("#ex-msg"); if (m) m.textContent = storageOK ? "Draft saved in this browser." : "This browser isn't letting the page save. Copy your work before leaving."; }, 300);
+}
+
+/* ───────────── mastery check ───────────── */
+let current = null; // { n, items: [{qi, order}] }
+function drawSet(n) {
+  const p = plateBy(n); const st = P(n);
+  const seen = st.seen || (st.seen = {});
+  const idx = shuffle(p.bank.map((_, i) => i)).sort((a, b) => (seen[a] || 0) - (seen[b] || 0));
+  const items = idx.slice(0, MASTERY.draw).map(qi => ({ qi, order: shuffle(p.bank[qi].a.map((_, i) => i)) }));
+  st.pending = { items, ans: {} }; save();
+  return { n, items };
+}
+function restorePending(n) {
+  const p = plateBy(n); const st = P(n); const pend = st.pending;
+  if (!pend || !Array.isArray(pend.items) || pend.items.length !== MASTERY.draw) return null;
+  const ok = pend.items.every(it => p.bank[it.qi] && Array.isArray(it.order) && it.order.length === p.bank[it.qi].a.length);
+  if (!ok) { delete st.pending; save(); return null; }
+  return { n, items: pend.items, restored: true };
+}
+function confKeyHTML() {
+  return `<ul class="conf-key">${CONFIDENCE.map(c => `<li><strong>${esc(c.label)}</strong>: ${esc(c.means)}.</li>`).join("")}</ul>`;
+}
+function renderMastery(n, result) {
+  const body = $("#m-body"); const p = plateBy(n); const st = P(n);
+  if (!current || current.n !== n) current = null;
+  if (!current && !result) current = restorePending(n);
+  if (!current && !result) {
+    const tries = st.mastery.attempts.length;
+    body.innerHTML = `<div class="intro"><p>Six questions drawn from a set of ${p.bank.length}. For each, choose an answer and say how sure you are:</p>
+      ${confKeyHTML()}
+      <p><strong>To pass:</strong> at least ${MASTERY.needCorrect} of ${MASTERY.draw} correct, no wrong answer marked Certain, and a confidence score of at least ${MASTERY.minScore} out of 100. The score rewards confidence that matches your results; marking everything Unsure scores zero. Being right is only half the test; knowing when you might be wrong is the other. ${n < 4 ? `<a href="#${u}-4">${U} ${N(plateBy(4))}</a> explains why.` : ""}</p>
+      ${tries ? `<p class="status-line">Attempts so far: ${tries}. A new attempt draws the questions you've seen least.</p>` : ""}</div>
+      <div class="btn-row"><button class="btn" type="button" id="m-start">${tries ? "Take a new set" : "Start the check"}</button></div>`;
+    return;
+  }
+  const set = current;
+  const pa = (!result && st.pending && st.pending.ans) || {};
+  body.innerHTML = `${!result ? `<div class="intro">${set.restored ? `<p class="status-line">You have an unfinished set. Your answers so far are kept.</p>` : ""}${confKeyHTML()}</div>` : ""}<div class="items">${set.items.map((it, k) => {
+    const q = p.bank[it.qi];
+    const r = result ? result.items[k] : null;
+    const prevA = r ? r.ans : (pa[k] ? pa[k].ans : null), prevC = r ? r.conf : (pa[k] ? pa[k].conf : null);
+    return `<div class="item ${r ? (r.ok ? "right" : "wrong") : ""}" data-mq="${k}">
+      <span class="mq-num">Question ${k + 1} of ${set.items.length}</span>
+      <div class="item-text" id="mq${k}-t"><strong>${esc(q.q)}</strong></div>
+      <fieldset class="opts" aria-labelledby="mq${k}-t" ${result ? "disabled" : ""}>${it.order.map(ai => `<label class="${result && ai === 0 ? "is-key" : ""}"><input type="radio" name="mq${k}" id="mq${k}-${ai}" value="${ai}" ${prevA === ai ? "checked" : ""}><span>${esc(q.a[ai])}</span></label>`).join("")}</fieldset>
+      <fieldset class="seg conf" aria-describedby="mq${k}-t" ${result ? "disabled" : ""}><legend class="label">How sure are you?</legend>${CONFIDENCE.map(c => `<label><input type="radio" name="mc${k}" id="mc${k}-${c.id}" value="${c.id}" ${prevC === c.id ? "checked" : ""}>${c.label}</label>`).join("")}</fieldset>
+      ${r ? `<div class="fb ${r.ok ? "right" : "wrong"}"><strong>${r.ok ? "Correct" : (r.conf === "certain" ? "Wrong, marked Certain" : "Not quite")}</strong>${r.ok ? "" : `The answer is “${esc(q.a[0])}.” `}${esc(q.why)}</div>` : ""}
+    </div>`;
+  }).join("")}</div>
+  ${result ? verdictHTML(result, n) : `<div class="btn-row"><button class="btn" type="button" id="m-submit" disabled>Submit answers</button><span class="status-line" id="m-count" role="status">0 of ${set.items.length} answered</span></div>`}`;
+  if (!result) updateMasteryCount();
+}
+function updateMasteryCount() {
+  if (!$("#m-count") || !current) return;
+  const done = current.items.filter((_, k) => $(`input[name="mq${k}"]:checked`) && $(`input[name="mc${k}"]:checked`)).length;
+  $("#m-count").textContent = `${done} of ${current.items.length} answered, with confidence`;
+  $("#m-submit").disabled = done < current.items.length;
+}
+function rememberMastery(n) {
+  const st = P(n); if (!current || !st.pending) return;
+  const ans = {};
+  current.items.forEach((_, k) => {
+    const a = $(`input[name="mq${k}"]:checked`), c = $(`input[name="mc${k}"]:checked`);
+    if (a || c) ans[k] = { ans: a ? Number(a.value) : null, conf: c ? c.value : null };
+  });
+  st.pending.ans = ans; save();
+}
+function verdictHTML(res, n) {
+  const reasons = [];
+  if (res.right < MASTERY.needCorrect) reasons.push(`you need ${MASTERY.needCorrect} correct`);
+  if (res.certainWrong) reasons.push(`${res.certainWrong} wrong answer${res.certainWrong > 1 ? "s were" : " was"} marked Certain`);
+  if (res.score < MASTERY.minScore) reasons.push(`your confidence score was ${res.score}, and it needs to be at least ${MASTERY.minScore}`);
+  const allUnsure = res.items.every(i => i.conf === "guess");
+  let advice = "Read the notes, then take a new set.";
+  if (res.right >= MASTERY.needCorrect && (res.certainWrong || res.score < MASTERY.minScore)) {
+    advice = res.certainWrong ? "You knew enough to pass. The lesson here is about how sure to be."
+      : allUnsure ? "You knew enough to pass, but marking everything Unsure doesn't show which answers you actually know. Use Fairly sure or Certain where you mean it."
+      : "You knew enough to pass. Your confidence needs to track your answers more closely: be surer where you know, and Unsure only where you might be wrong.";
+  }
+  const next = n ? (plateBy(n + 1) ? `<a class="next-link" href="#${u}-${n + 1}">Go on to ${U} ${N(plateBy(n + 1))} →</a>` : `<a class="next-link" href="#final">Go on to the final step →</a>`) : "";
+  return `<div class="verdict ${res.pass ? "pass" : "fail"}">
+    <h3>${res.pass ? "Passed" : "Not yet"}</h3>
+    <div class="stats">
+      <div class="stat"><span class="label">Correct</span><span class="v">${res.right} / ${res.items.length}</span></div>
+      <div class="stat"><span class="label">Wrong and Certain</span><span class="v">${res.certainWrong}</span></div>
+      <div class="stat"><span class="label">Confidence score</span><span class="v">${res.score} / 100</span></div>
+    </div>
+    <p>${res.pass ? (res.overall ? `This ${u} is mastered.` : `Check passed. Finish the field exercise above to master the ${u}.`) : `Not yet, because ${reasons.join(", and ")}. ${advice}`}</p>
+    <div class="btn-row">${res.pass && res.overall ? next : ""}<button class="btn ${res.pass ? "quiet" : ""}" type="button" id="m-again">Take a new set</button><a class="label" href="#record" style="color:var(--signal)">See your calibration →</a></div>
+  </div>`;
+}
+function submitMastery(n) {
+  const p = plateBy(n); const st = P(n); const set = current;
+  const seen = st.seen || (st.seen = {});
+  const items = set.items.map((it, k) => {
+    const ans = Number($(`input[name="mq${k}"]:checked`).value);
+    const conf = $(`input[name="mc${k}"]:checked`).value;
+    const first = !seen[it.qi];
+    seen[it.qi] = (seen[it.qi] || 0) + 1;
+    return { q: it.qi, ans, conf, ok: ans === 0, first };
+  });
+  const right = items.filter(i => i.ok).length;
+  const certainWrong = items.filter(i => !i.ok && i.conf === "certain").length;
+  const score = confScore(setBrier(items));
+  const pass = right >= MASTERY.needCorrect && certainWrong === 0 && score >= MASTERY.minScore;
+  const when = new Date().toISOString();
+  st.mastery.attempts.push({ at: when, items: items.map(i => ({ q: i.q, conf: i.conf, ok: i.ok, first: i.first })), pass, score });
+  if (pass && !st.mastery.passedAt) st.mastery.passedAt = when;
+  delete st.pending;
+  save();
+  const res = { items, right, certainWrong, score, pass, overall: mastered(n) };
+  renderMastery(n, res);
+  $("#m-status").innerHTML = mPassed(n) ? chip({ cls: "ok", text: "Passed " + fmtDate(st.mastery.passedAt) }) : "";
+  renderScalebar(n);
+  $("#mastery").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+}
+
+/* ───────────── record ───────────── */
+function calibChart(c) {
+  const W = 560, H = 300, L = 54, R = 20, T = 20, B = 52;
+  const x = p => L + (p - 0.4) / 0.6 * (W - L - R);
+  const y = v => T + (1 - v) * (H - T - B);
+  const ticks = [0, 0.25, 0.5, 0.75, 1];
+  const pts = c.levels.filter(l => l.n);
+  const maxN = Math.max(1, ...c.levels.map(l => l.n));
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Calibration chart: share correct at each confidence level">
+    ${ticks.map(t => `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--hairline)" stroke-width="1"/><text x="${L - 8}" y="${y(t) + 4}" text-anchor="end" font-size="12" fill="var(--ink-muted)" style="font-family:var(--f-label)">${Math.round(t * 100)}%</text>`).join("")}
+    <line x1="${x(0.4)}" y1="${y(0.4)}" x2="${x(1)}" y2="${y(1)}" stroke="var(--rule)" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="${x(0.47)}" y="${y(0.47) + 20}" text-anchor="start" font-size="12" fill="var(--ink-muted)" font-style="italic" style="font-family:var(--f-text)">perfectly calibrated</text>
+    ${CONFIDENCE.map(cf => `<line x1="${x(cf.p)}" x2="${x(cf.p)}" y1="${H - B}" y2="${H - B + 5}" stroke="var(--ink)"/><text x="${x(cf.p)}" y="${H - B + 20}" text-anchor="middle" font-size="12" font-weight="600" fill="var(--ink)" style="font-family:var(--f-label)">${cf.label}</text><text x="${x(cf.p)}" y="${H - B + 36}" text-anchor="middle" font-size="11" fill="var(--ink-muted)" style="font-family:var(--f-label)">aims at ${Math.round(cf.p * 100)}%</text>`).join("")}
+    <line x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}" stroke="var(--ink)" stroke-width="1.5"/>
+    ${pts.length > 1 ? `<polyline points="${pts.map(l => `${x(l.p)},${y(l.rate)}`).join(" ")}" fill="none" stroke="var(--slate)" stroke-width="2"/>` : ""}
+    ${pts.map(l => `<circle cx="${x(l.p)}" cy="${y(l.rate)}" r="${5 + 7 * Math.sqrt(l.n / maxN)}" fill="${l.id === "certain" ? "var(--signal)" : "var(--slate)"}" stroke="var(--paper)" stroke-width="1.5"/><text x="${l.id === "certain" ? x(l.p) - 14 : x(l.p) + 14}" y="${y(l.rate) - 8}" text-anchor="${l.id === "certain" ? "end" : "start"}" font-size="12" fill="var(--ink)" style="font-family:var(--f-text)">${Math.round(l.rate * 100)}% of ${l.n}</text>`).join("")}
+    ${pts.length ? "" : `<text x="${(L + W - R) / 2}" y="${H / 2 - 10}" text-anchor="middle" font-size="14" fill="var(--ink-muted)" font-style="italic" style="font-family:var(--f-text)">Take a mastery check to plot your first points.</text>`}
+  </svg>`;
+}
+function progressCode() {
+  try { return "BRG1." + btoa(unescape(encodeURIComponent(JSON.stringify(S)))); } catch (e) { return ""; }
+}
+function viewRecord() {
+  const c = calib();
+  const rows = [];
+  PLATES.forEach(p => { const st = S.plates[p.n]; if (!st) return; st.mastery.attempts.forEach((a, i) => rows.push({ p, i: i + 1, a })); });
+  rows.sort((r1, r2) => r2.a.at.localeCompare(r1.a.at));
+  const pct = v => v == null ? "—" : Math.round(v * 100) + "%";
+  let reading = "Your record fills in as you take mastery checks.";
+  if (c.n >= 6) {
+    const early = c.n < 15;
+    const lead = early ? `An early pattern, from only ${c.n} first-time answers: ` : "";
+    if (c.gap > 0.1) reading = `${lead}on average you claimed ${pct(c.meanConf)} confidence and were right ${pct(c.acc)} of the time. ${early ? "So far your confidence is running ahead of your results." : "Your confidence runs ahead of your evidence. Use Certain more sparingly."}`;
+    else if (c.gap < -0.1) reading = `${lead}you were right ${pct(c.acc)} of the time while claiming ${pct(c.meanConf)} on average. ${early ? "So far you know more than you're crediting yourself with." : "You know more than you credit yourself with."}`;
+    else reading = `${lead}you claimed ${pct(c.meanConf)} on average and were right ${pct(c.acc)} of the time. ${early ? "So far that's close calibration." : "That is close calibration."}`;
+    reading = reading.charAt(0).toUpperCase() + reading.slice(1);
+  }
+  return `
+<header class="plate-head"><h1>Progress and confidence</h1><p class="bearing">How often you were right, at each level of confidence.</p></header>
+<section class="section">
+  <div class="stats">
+    <div class="stat"><span class="label">${Us} mastered</span><span class="v">${PLATES.filter(p => mastered(p.n)).length} / 6</span></div>
+    <div class="stat"><span class="label">Questions answered</span><span class="v">${c.all}</span></div>
+    <div class="stat"><span class="label">First-time answers</span><span class="v">${c.n}</span></div>
+    <div class="stat"><span class="label">Correct, first time</span><span class="v">${pct(c.acc)}</span></div>
+    <div class="stat"><span class="label">Confidence score</span><span class="v">${c.score == null ? "—" : c.score + " / 100"}</span></div>
+  </div>
+  <div class="chart-wrap"><div class="label" style="margin-bottom:6px">${T.arabic ? 'Calibration' : 'Record · Fig. 1 · Calibration'}</div>${calibChart(c)}</div>
+  <p class="note">${reading}</p>
+  <p class="note">Points on the dashed line mean your confidence matched your results; points below it mean you were overconfident at that level. The chart and scores count only the first time you saw each question, since recognizing an answer you've already had explained isn't the same as knowing it. The confidence score runs from 0, which is what always answering “Unsure” earns, to 100.${c.brier == null ? "" : ` Your underlying Brier score is ${c.brier.toFixed(3)}, where 0 is perfect.`}</p>
+</section>
+<section class="section">
+  <div class="section-head"><h2>Mastery check log</h2></div>
+  ${rows.length ? `<div class="table-scroll"><table class="log"><thead><tr><th>Date</th><th>${U}</th><th>Attempt</th><th>Correct</th><th>Certain and wrong</th><th>Confidence score</th><th>Result</th></tr></thead><tbody>${rows.map(r => `<tr><td>${fmtDate(r.a.at)}</td><td>${N(r.p)} · ${esc(r.p.name)}</td><td>${r.i}</td><td>${r.a.items.filter(x => x.ok).length} / ${r.a.items.length}</td><td>${r.a.items.filter(x => !x.ok && x.conf === "certain").length}</td><td>${r.a.score != null ? r.a.score : confScore(setBrier(r.a.items))}</td><td>${r.a.pass ? "Passed" : "Not yet"}</td></tr>`).join("")}</tbody></table></div>` : `<p class="note">No attempts yet. Each ${u} ends with a mastery check.</p>`}
+</section>
+<section class="section">
+  <div class="section-head"><h2>Move your progress to another device</h2></div>
+  <p class="note">Bearings stores progress only in this browser. Copy this code and paste it into Bearings on another device or browser to pick up where you left off. Anyone with the code can load your progress, so keep it to yourself.</p>
+  <div class="fieldset"><label for="code-out">Code for this browser</label><textarea id="code-out" rows="3" readonly class="code-box">${esc(progressCode())}</textarea></div>
+  <div class="btn-row"><button class="btn quiet" type="button" id="code-copy">Copy code</button><span class="status-line" id="code-copy-msg"></span></div>
+  <div class="fieldset"><label for="code-in">Load progress from a code</label><textarea id="code-in" rows="3" class="code-box" placeholder="BRG1.…"></textarea></div>
+  <div class="btn-row"><button class="btn quiet" type="button" id="code-load">Load progress</button><span class="status-line" id="code-load-msg"></span></div>
+</section>
+<section class="section">
+  <div class="section-head"><h2>Clear all progress</h2></div>
+  <p class="note">This erases your progress in this browser. Copy your progress code first if you might want it back.</p>
+  <div id="reset-zone" class="btn-row"><button class="btn danger" type="button" id="reset-ask">Clear progress…</button></div>
+</section>`;
+}
+
+
+/* ───────────── final step ───────────── */
+function viewFinal() {
+  const f = F(); const v = f.val || {};
+  const ready = allMastered();
+  const pid = "final";
+  return `<header class="plate-head">
+  <div class="plate-meta"><span class="status-line">Final step · About ${FINAL.minutes} minutes</span>${chip(finalDone() ? { cls: "ok", text: "Done" } : { cls: "", text: ready ? "Ready" : "Open any time" })}</div>
+  <h1>${esc(FINAL.name)}</h1>
+  <p class="bearing">${esc(FINAL.bearing)}</p>
+</header>
+<div class="prose">${FINAL.intro}${ready ? "" : `<p class="note">You can draft this now. The certificate needs all six ${u}s mastered as well.</p>`}</div>
+${caseAnswerBlock(1)}
+<section class="fig" id="final-form" aria-label="Revised answer">
+  <div class="fig-cap"><span class="label">${T.arabic ? "Your answer" : "Final plate · Your answer"}</span><span id="final-status">${finalDone() ? chip({ cls: "ok", text: "Done " + fmtDate(f.at) }) : ""}</span></div>
+  <div class="fig-body">
+    <div class="part" data-final="1">
+      <div class="part-prompt" id="final-prompt">Write your answer, then the two sources it rests on.</div>
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:var(--measure)">${FINAL.fields.map(fl => `
+        <div class="fieldset"><label for="${pid}-${fl.id}">${esc(fl.label)}</label><textarea id="${pid}-${fl.id}" data-field="${fl.id}" rows="${fl.rows || 2}" placeholder="${esc(fl.placeholder || "")}">${esc(v[fl.id] || "")}</textarea><span class="hint">At least ${fl.min} characters.</span></div>`).join("")}</div>
+      ${checksHTML(pid, FINAL, v)}
+      <div class="fb-slot" id="final-fb"></div>
+    </div>
+    <div class="btn-row"><button class="btn" id="final-check" type="button">Finish</button><span class="status-line" id="final-msg" role="status">Your answer saves in this browser as you go.</span></div>
+    <div id="final-model">${finalDone() ? modelHTML() : ""}</div>
+  </div>
+</section>
+<nav class="plate-nav" aria-label="Final step navigation">
+  <a href="#${u}-6"><span class="label">← ${U} ${N(plateBy(6))}</span><span class="nm">${esc(plateBy(6).name)}</span></a>
+  <a class="next" href="#certificate"><span class="label">Finish →</span><span class="nm">Certificate</span></a>
+</nav>`;
+}
+function modelHTML() {
+  return `<details class="model" open><summary>Compare with one way to write it</summary><div class="prose">${FINAL.model}</div><p class="note">Yours doesn't need to match. Check whether it does what this one does: says how sure it is, cites what it rests on, and names what's still open.</p></details>`;
+}
+function readFinal() {
+  const root = $('[data-final]'); const val = {};
+  if (!root) return val;
+  $$("[data-field]", root).forEach(el => { val[el.dataset.field] = el.value; }); readChecks(root, val);
+  return val;
+}
+function checkFinal() {
+  const f = F(); f.val = readFinal();
+  const short = FINAL.fields.filter(fl => (f.val[fl.id] || "").trim().length < fl.min);
+  const unchecked = FINAL.checks.filter((_, i) => !f.val["check_" + i]).length;
+  const bits = [];
+  if (short.length) bits.push(`Add a bit more to: ${short.map(fl => esc(fl.label)).join("; ")}.`);
+  if (unchecked) bits.push("Tick each item in the review list once it's true of your answer.");
+  $$('[data-final] textarea').forEach(t => t.classList.toggle("right", !short.find(fl => fl.id === t.dataset.field)));
+  if (!bits.length && !f.done) { f.done = true; f.at = new Date().toISOString(); }
+  save();
+  $("#final-fb").innerHTML = bits.length ? `<div class="fb wrong"><strong>A little more</strong>${bits.join(" ")}</div>` : `<div class="fb right"><strong>Done</strong>${allMastered() ? `Your revised answer is saved. <a href="#certificate">Go to your certificate →</a>` : `Your revised answer is saved. The certificate opens once all six ${u}s are mastered.`}</div>`;
+  if (f.done) { $("#final-status").innerHTML = chip({ cls: "ok", text: "Done " + fmtDate(f.at) }); $("#final-model").innerHTML = modelHTML(); }
+}
+function autosaveFinal() {
+  const f = F(); f.val = readFinal();
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => { save(); const m = $("#final-msg"); if (m) m.textContent = storageOK ? "Draft saved in this browser." : "This browser isn't letting the page save. Copy your work before leaving."; }, 300);
+}
+
+/* ───────────── further reading ───────────── */
+function viewReading() {
+  const mods = r => r.modules.map(n => `<a href="#${u}-${n}">${U} ${N(plateBy(n))}</a>`).join(", ");
+  const card = r => `<li class="reading">
+    <span class="label">Extends ${mods(r)}</span>
+    <p class="cite">${r.cite}</p>
+    <p>${r.note}</p>
+    <p class="links"><a href="${r.open}" target="_blank" rel="noopener">${r.openLabel}</a><span class="doi">doi: ${esc(r.doi)}</span></p>
+  </li>`;
+  return `<header class="plate-head"><h1>Further reading</h1><p class="bearing">Where these ideas come from—five readings that go deeper than the course. All are free to read.</p></header>
+  <section class="section"><ul class="readings">${READINGS.filter(r => !r.also).map(card).join("")}</ul></section>
+  <section class="section"><div class="section-head"><h2>Also useful</h2></div><ul class="readings">${READINGS.filter(r => r.also).map(card).join("")}</ul></section>`;
+}
+/* ───────────── certificate ───────────── */
+function bearingText() { const v = ((S.plates[6] || {}).ex || {}).parts; return (v && v.bearing && v.bearing.val) || {}; }
+async function recordCode() {
+  const payload = JSON.stringify({ name: S.name, plates: PLATES.map(p => masteredAt(p.n)), c: calib().all, q: bearingText().question || "", f: (S.final && S.final.at) || "" });
+  try {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(payload));
+    const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("").toUpperCase();
+    return `${hex.slice(0, 4)}-${hex.slice(4, 8)}-${hex.slice(8, 12)}`;
+  } catch (e) {
+    let h = 2166136261; for (let i = 0; i < payload.length; i++) { h ^= payload.charCodeAt(i); h = Math.imul(h, 16777619); }
+    const hex = (h >>> 0).toString(16).toUpperCase().padStart(8, "0"); return `${hex.slice(0, 4)}-${hex.slice(4, 8)}`;
+  }
+}
+function completedOn() { const ds = PLATES.map(p => masteredAt(p.n)).concat(S.final && S.final.at ? [S.final.at] : []).filter(Boolean).sort(); return ds[ds.length - 1]; }
+const paras = t => String(t || "").split(/\n\s*\n/).map(x => x.trim()).filter(Boolean).map(x => `<p>${esc(x).replace(/\n/g, "<br>")}</p>`).join("");
+
+function viewCertificate() {
+  if (!courseDone()) {
+    return `<header class="plate-head"><h1>Certificate</h1><p class="bearing">The certificate appears when all six ${u}s are mastered and the final step is done.</p></header>
+    <section class="section"><ul class="checklist">${PLATES.map(p => `<li>${chip(status(p.n))}<a href="#${u}-${p.n}">${U} ${N(p)} · ${esc(p.name)}</a>${!mastered(p.n) ? `<span class="status-line">${exPassed(p.n) ? "" : "exercise"}${!exPassed(p.n) && !mPassed(p.n) ? " and " : ""}${mPassed(p.n) ? "" : "mastery check"} to go</span>` : ""}</li>`).join("")}
+    <li>${chip(finalDone() ? { cls: "ok", text: "Done" } : { cls: "", text: "Not done" })}<a href="#final">Final step · ${esc(FINAL.name)}</a></li></ul>
+    <p class="note">A ${u} is mastered when its field exercise is complete and its mastery check is passed: at least ${MASTERY.needCorrect} of ${MASTERY.draw} correct, no wrong answer marked Certain, and a confidence score of at least ${MASTERY.minScore}.</p></section>`;
+  }
+  const c = calib(); const b = bearingText();
+  return `<header class="plate-head no-print"><h1>All six ${u}s mastered</h1><p class="bearing">Enter your name as you want it to appear on your certificate.</p></header>
+  <section class="section no-print"><div class="fields" style="max-width:var(--measure)"><div class="fieldset"><label for="cert-name">Name on certificate</label><input type="text" id="cert-name" value="${esc(S.name || "")}" placeholder="Your name" autocomplete="name"></div></div></section>
+  <section class="neatline cert" aria-label="Certificate">
+    <div class="neat-inner">
+      <span class="label">Bearings · A short course in research and AI literacy</span>
+      <h2>Certificate of completion</h2>
+      <p>This records that</p>
+      <div class="name" id="cert-name-out">${esc(S.name || "Your name")}</div>
+      <p style="max-width:var(--measure)">completed all six ${u}s of Bearings, mastering each move: interrogating an answer, tracing claims to their sources, searching to test, weighing evidence, citing, and asking better questions, and wrote a revised answer of their own. Completed ${fmtDate(completedOn())}.</p>
+      <div class="plates">${PLATES.map(p => `<div><span class="r">${N(p)}</span><span class="d">${fmtDate(masteredAt(p.n))}</span></div>`).join("")}</div>
+      <div class="stats">
+        <div class="stat"><span class="label">Mastery questions</span><span class="v">${c.all}</span></div>
+        <div class="stat"><span class="label">Correct, first time</span><span class="v">${Math.round(c.acc * 100)}%</span></div>
+        <div class="stat"><span class="label">Mean confidence</span><span class="v">${Math.round(c.meanConf * 100)}%</span></div>
+        <div class="stat"><span class="label">Confidence score</span><span class="v">${c.score} / 100</span></div>
+      </div>
+      ${b.question ? `<div style="display:flex;flex-direction:column;gap:6px"><span class="label">Bearing taken</span><p class="q">${esc(b.question)}</p></div>` : ""}
+      ${S.final && S.final.val && S.final.val.answer ? `<div class="cert-answer"><span class="label">Revised answer</span><div class="q">${paras(S.final.val.answer)}</div></div>` : ""}
+      <div class="cert-foot">
+        <div class="credit">${station(22)}<span class="label">${CREDIT}</span></div>
+        <span class="label">Record <span id="cert-code">····-····-····</span></span>
+      </div>
+      <p class="hint">Self-issued. Bearings keeps no records and no one has reviewed this certificate; it is a statement of work the holder completed.</p>
+    </div>
+  </section>
+  <section class="section no-print">
+    <div class="btn-row" id="cert-actions"><button class="btn" type="button" id="cert-png">Save as image</button><button class="btn quiet" type="button" id="cert-print" hidden>Print</button><span class="status-line" id="cert-msg"></span></div>
+  </section>`;
+}
+
+async function drawCertificate() {
+  const c = calib(); const b = bearingText(); const code = await recordCode();
+  const CC = T.canvas || {};
+  try { await Promise.all((CC.fontsToLoad || ["400 64px 'Libre Caslon Display'", "400 20px 'Libre Caslon Text'", "italic 400 20px 'Libre Caslon Text'", "600 16px 'Barlow Condensed'"]).map(f => document.fonts.load(f))); } catch (e) {}
+  const W = 1650, H = 1275; // 11 x 8.5 at 150 dpi
+  const cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+  const g = cv.getContext("2d");
+  const ink = CC.ink || "#1b2731", muted = CC.muted || "#4a5863", rule = CC.rule || "#7d8a8c", paper = CC.paper || "#fafbf8", slate = CC.slate || "#2c4a62", signal = CC.signal || "#086a76", stripText = CC.stripText || "#d5e1e8";
+  const FD = CC.display || "'Libre Caslon Display', Georgia, serif", FT = CC.text || "'Libre Caslon Text', Georgia, serif", FL = CC.label || "'Barlow Condensed', 'Arial Narrow', sans-serif", DW = CC.displayWeight || 400;
+  g.fillStyle = paper; g.fillRect(0, 0, W, H);
+  if (CC.simpleFrame) { g.strokeStyle = rule; g.lineWidth = 2; g.strokeRect(60, 60, W - 120, H - 120); g.fillStyle = signal; g.fillRect(60, 60, W - 120, 10); }
+  else { g.strokeStyle = ink; g.lineWidth = 6; g.strokeRect(60, 60, W - 120, H - 120); g.strokeStyle = rule; g.lineWidth = 3; g.strokeRect(74, 74, W - 148, H - 148); }
+  const label = (t, x, y, size = 20, col = muted, align = "left") => { g.font = `600 ${size}px ${FL}`; g.fillStyle = col; g.textAlign = align; if ("letterSpacing" in g) g.letterSpacing = (CC.upper === false ? 0 : size * 0.1) + "px"; g.fillText(CC.upper === false ? t : t.toUpperCase(), x, y); if ("letterSpacing" in g) g.letterSpacing = "0px"; };
+  const wrap = (text, x, y, maxW, lh, font, col) => { g.font = font; g.fillStyle = col; g.textAlign = "left"; const words = String(text).split(/\s+/); let line = ""; for (const w of words) { const t = line ? line + " " + w : w; if (g.measureText(t).width > maxW && line) { g.fillText(line, x, y); y += lh; line = w; } else line = t; } if (line) g.fillText(line, x, y); return y + lh; };
+  const X = 140;
+  label("Bearings · A short course in research and AI literacy", X, 170, 22);
+  g.font = `${DW} 80px ${FD}`; g.fillStyle = ink; g.textAlign = "left"; g.fillText("Certificate of completion", X, 270);
+  g.font = `400 26px ${FT}`; g.fillText("This records that", X, 340);
+  g.font = `${DW} 92px ${FD}`; g.fillStyle = slate;
+  let nm = S.name || "Your name"; while (g.measureText(nm).width > W - 2 * X && nm.length > 3) nm = nm.slice(0, -2) + "…";
+  g.fillText(nm, X, 450);
+  let y = wrap(`completed all six ${u}s of Bearings, mastering each move: interrogating an answer, tracing claims to their sources, searching to test, weighing evidence, citing, and asking better questions, and wrote a revised answer of their own. Completed ${fmtDate(completedOn())}.`, X, 520, W - 2 * X, 36, `400 26px ${FT}`, ink);
+  // plates strip
+  const sy = y + 10, sw = (W - 2 * X) / 6;
+  PLATES.forEach((p, i) => { g.fillStyle = CC.strip || ink; g.fillRect(X + i * sw, sy, sw, 70); g.strokeStyle = paper; g.lineWidth = 2; if (i) { g.beginPath(); g.moveTo(X + i * sw, sy); g.lineTo(X + i * sw, sy + 70); g.stroke(); } label(N(p), X + i * sw + sw / 2, sy + 32, 24, paper, "center"); label(fmtDate(masteredAt(p.n)), X + i * sw + sw / 2, sy + 58, 17, stripText, "center"); });
+  y = sy + 130;
+  const stats = [["Mastery questions", String(c.all)], ["Correct, first time", Math.round(c.acc * 100) + "%"], ["Mean confidence", Math.round(c.meanConf * 100) + "%"], ["Confidence score", c.score + " / 100"]];
+  stats.forEach((s, i) => { const sx = X + i * 330; label(s[0], sx, y, 18); g.font = `400 40px ${FT}`; g.fillStyle = ink; g.textAlign = "left"; g.fillText(s[1], sx, y + 48); });
+  y += 110;
+  if (b.question) { label("Bearing taken", X, y, 18); g.fillStyle = signal; g.fillRect(X, y + 16, 5, 70); wrap(b.question.length > 220 ? b.question.slice(0, 217) + "…" : b.question, X + 22, y + 46, W - 2 * X - 30, 34, `italic 400 26px ${FT}`, ink); }
+  // footer
+  g.strokeStyle = rule; g.lineWidth = 1.5; g.beginPath(); g.moveTo(X, H - 190); g.lineTo(W - X, H - 190); g.stroke();
+  if (!T.noMark) { g.strokeStyle = ink; g.lineWidth = 3; g.beginPath(); g.moveTo(X + 22, H - 160); g.lineTo(X + 44, H - 120); g.lineTo(X, H - 120); g.closePath(); g.stroke();
+  g.fillStyle = signal; g.beginPath(); g.arc(X + 22, H - 133, 6, 0, Math.PI * 2); g.fill(); }
+  label(CREDIT, T.noMark ? X : X + 62, H - 124, 22, ink);
+  label("Record " + code, W - X, H - 124, 22, ink, "right");
+  wrap("Self-issued. Bearings keeps no records and no one has reviewed this certificate; it is a statement of work the holder completed.", X, H - 92, W - 2 * X, 26, `italic 400 19px ${FT}`, muted);
+  return cv;
+}
+
+async function saveCertificate() {
+  const msg = $("#cert-msg"); msg.textContent = "Preparing image…";
+  const cv = await drawCertificate();
+  const blob = await new Promise(r => cv.toBlob(r, "image/png"));
+  const filename = `Bearings-certificate-${(S.name || "learner").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "")}.png`;
+  let dl = null;
+  try { if (window.claude && window.claude.use) dl = await window.claude.use("downloads"); } catch (e) { dl = null; }
+  if (dl) {
+    try { await dl.save({ filename, data: blob }); msg.textContent = "Saved."; } catch (e) { msg.textContent = "The save was cancelled or isn't available here."; }
+    return;
+  }
+  if (window.claude) { msg.textContent = "Saving files isn't available in this view. Open the hosted version of Bearings to save your certificate."; return; }
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  msg.textContent = "Image saved to your downloads.";
+}
+
+/* ───────────── cover contours ───────────── */
+function drawContours() {
+  const cv = $("#contours"); if (!cv) return;
+  const box = cv.parentElement.getBoundingClientRect();
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = Math.max(1, box.width * dpr); cv.height = Math.max(1, box.height * dpr);
+  const g = cv.getContext("2d"); g.scale(dpr, dpr);
+  const css = getComputedStyle(document.documentElement);
+  const line = css.getPropertyValue("--paper").trim() || "#f2f3ef";
+  const sig = css.getPropertyValue("--signal").trim() || "#086a76";
+  const w = box.width, h = box.height;
+  const cx = w * 0.58, cy = h * 0.42;
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const ph = [rnd() * 6.28, rnd() * 6.28, rnd() * 6.28];
+  g.strokeStyle = line; g.globalAlpha = 0.55;
+  for (let k = 1; k <= 16; k++) {
+    const r = k * Math.max(w, h) * 0.045;
+    g.lineWidth = k % 5 === 0 ? 1.6 : 0.8;
+    g.beginPath();
+    for (let a = 0; a <= 360; a += 3) {
+      const t = a * Math.PI / 180;
+      const rr = r * (1 + 0.16 * Math.sin(2 * t + ph[0] + k * 0.12) + 0.08 * Math.sin(3 * t + ph[1]) + 0.05 * Math.sin(5 * t + ph[2] - k * 0.2));
+      const px = cx + rr * Math.cos(t) * 1.15, py = cy + rr * Math.sin(t) * 0.85;
+      a ? g.lineTo(px, py) : g.moveTo(px, py);
+    }
+    g.closePath(); g.stroke();
+  }
+  // graticule ticks
+  g.globalAlpha = 0.35; g.lineWidth = 0.6;
+  for (let gx = 24; gx < w; gx += 48) { g.beginPath(); g.moveTo(gx, 0); g.lineTo(gx, h); g.stroke(); }
+  for (let gy = 24; gy < h; gy += 48) { g.beginPath(); g.moveTo(0, gy); g.lineTo(w, gy); g.stroke(); }
+  // station
+  g.globalAlpha = 1; g.strokeStyle = line; g.lineWidth = 2;
+  g.beginPath(); g.moveTo(cx, cy - 14); g.lineTo(cx + 13, cy + 9); g.lineTo(cx - 13, cy + 9); g.closePath(); g.stroke();
+  g.fillStyle = sig; g.beginPath(); g.arc(cx, cy + 1.3, 3.5, 0, Math.PI * 2); g.fill();
+}
+
+/* ───────────── router ───────────── */
+function route() {
+  const h = (location.hash || "#key").slice(1);
+  const view = $("#view");
+  const m = new RegExp("^" + u + "-([1-6])$").exec(h);
+  current = null;
+  if (m) {
+    const n = Number(m[1]);
+    view.innerHTML = viewPlate(n);
+    renderScalebar(n);
+    renderMastery(n);
+    document.title = `${U} ${N(plateBy(n))} · Bearings`;
+  } else if (h === "final") {
+    view.innerHTML = viewFinal(); renderScalebar(0); document.title = "Final step · Bearings";
+  } else if (h === "reading") {
+    view.innerHTML = viewReading(); renderScalebar(0);
+    $('[data-nav="reading"]').setAttribute("aria-current", "page"); document.title = "Further reading · Bearings";
+  } else if (h === "record") {
+    view.innerHTML = viewRecord(); renderScalebar(0);
+    $('[data-nav="record"]').setAttribute("aria-current", "page"); document.title = "Progress · Bearings";
+  } else if (h === "certificate") {
+    view.innerHTML = viewCertificate(); renderScalebar(0);
+    $('[data-nav="certificate"]').setAttribute("aria-current", "page"); document.title = "Certificate · Bearings";
+    if (courseDone()) {
+      recordCode().then(code => { const el = $("#cert-code"); if (el) el.textContent = code; });
+      if (!window.claude) { const pb = $("#cert-print"); if (pb) pb.hidden = false; }
+    }
+  } else {
+    view.innerHTML = viewKey(); renderScalebar(0);
+    $('[data-nav="key"]').setAttribute("aria-current", "page"); document.title = "Bearings";
+    requestAnimationFrame(drawContours);
+  }
+  window.scrollTo(0, 0);
+}
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("button"); if (!t) return;
+  const m = new RegExp("^" + u + "-([1-6])$").exec((location.hash || "").slice(1)); const n = m ? Number(m[1]) : 0;
+  if (t.id === "ex-check" && n) checkExercise(n);
+  if ((t.id === "m-start" || t.id === "m-again") && n) { current = drawSet(n); renderMastery(n); $("#mastery").scrollIntoView({ block: "start" }); }
+  if (t.dataset.jump) { const el = document.getElementById(t.dataset.jump); if (el) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }); }
+  if (t.id === "final-check") checkFinal();
+  if (t.id === "m-submit" && n) submitMastery(n);
+  if (t.id === "code-copy") {
+    const ta = $("#code-out"); const msg = $("#code-copy-msg");
+    const fallback = () => { ta.focus(); ta.select(); msg.textContent = "Selected. Copy it with your keyboard or menu."; };
+    try { navigator.clipboard.writeText(ta.value).then(() => { msg.textContent = "Copied."; }, fallback); } catch (err) { fallback(); }
+  }
+  if (t.id === "code-load") {
+    const msg = $("#code-load-msg"); const raw = $("#code-in").value.trim();
+    try {
+      if (!raw.startsWith("BRG1.")) throw 0;
+      const obj = JSON.parse(decodeURIComponent(escape(atob(raw.slice(5)))));
+      if (!obj || obj.v !== 1 || typeof obj.plates !== "object") throw 0;
+      S = obj; save(); msg.textContent = "Progress loaded."; route();
+    } catch (err) { msg.textContent = "That code didn't work. Copy the whole code, starting with BRG1."; }
+  }
+  if (t.id === "reset-ask") {
+    $("#reset-zone").innerHTML = `<div class="inline-confirm"><span>Erase all progress in this browser?</span><button class="btn danger" type="button" id="reset-yes">Erase</button><button class="btn quiet" type="button" id="reset-no">Keep it</button></div>`;
+  }
+  if (t.id === "reset-yes") { S = blank(); save(); location.hash = "#key"; route(); }
+  if (t.id === "reset-no") route();
+  if (t.id === "cert-png") saveCertificate();
+  if (t.id === "cert-print") window.print();
+});
+function onEdit(e) {
+  const m = new RegExp("^" + u + "-([1-6])$").exec((location.hash || "").slice(1));
+  if (m && e.target.closest("#exercise")) autosaveExercise(Number(m[1]), e.target);
+  if (m && e.target.closest("#m-body") && current) { rememberMastery(Number(m[1])); updateMasteryCount(); }
+  if (location.hash === "#final" && e.target.closest("[data-final]")) autosaveFinal();
+}
+document.addEventListener("change", onEdit);
+document.addEventListener("input", e => {
+  if (e.target.matches("textarea, input[type=text]")) onEdit(e);
+  if (e.target.id === "cert-name") {
+    S.name = e.target.value.slice(0, 80); save();
+    const o = $("#cert-name-out"); if (o) o.textContent = S.name || "Your name";
+    recordCode().then(code => { const el = $("#cert-code"); if (el) el.textContent = code; });
+  }
+});
+let rz; window.addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(drawContours, 150); });
+try { matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawContours); } catch (e) {}
+new MutationObserver(drawContours).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+window.addEventListener("hashchange", route);
+route();
+})();
+
+</script>
+
+</body>
+</html>
